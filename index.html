@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>WebCode · Mega Quiz (HTML+CSS+C+MS Office) 50 Q</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,19 +16,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem 1rem;
+      padding: 1rem;
     }
     .quiz-card {
       max-width: 1200px;
       width: 100%;
       background: linear-gradient(145deg, #ffffff, #f5f8ff);
-      border-radius: 50px;
-      padding: 2.8rem 3rem;
-      box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      border-radius: 30px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
       transition: all 0.3s;
     }
-    @media (max-width: 700px) {
-      .quiz-card { padding: 1.5rem 1.2rem; border-radius: 30px; }
+    
+    @media (min-width: 768px) {
+      .quiz-card {
+        padding: 2.8rem 3rem;
+        border-radius: 50px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .quiz-card {
+        padding: 1rem 0.8rem;
+        border-radius: 20px;
+      }
     }
     
     .institute-header {
@@ -42,25 +53,42 @@
       bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
-      height: 4px;
+      width: 60px;
+      height: 3px;
       background: linear-gradient(90deg, #f7971e, #ffd200, #f7971e);
       border-radius: 4px;
     }
+    @media (min-width: 768px) {
+      .institute-header::after {
+        width: 100px;
+        height: 4px;
+      }
+    }
     .institute-header h1 {
       font-weight: 800;
-      font-size: 2.8rem;
+      font-size: 1.8rem;
       background: linear-gradient(135deg, #1a1a2e, #16213e);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
+    }
+    @media (min-width: 768px) {
+      .institute-header h1 {
+        font-size: 2.8rem;
+        letter-spacing: -0.5px;
+      }
+    }
+    @media (max-width: 480px) {
+      .institute-header h1 {
+        font-size: 1.4rem;
+      }
     }
     .institute-header .subhead {
       font-weight: 500;
       color: #4a6a8a;
-      font-size: 1rem;
-      letter-spacing: 0.5px;
+      font-size: 0.8rem;
+      letter-spacing: 0.3px;
       margin-top: 4px;
       display: inline-block;
       background: linear-gradient(90deg, #4a6a8a, #6a8aaa);
@@ -68,23 +96,47 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+    @media (min-width: 768px) {
+      .institute-header .subhead {
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+      }
+    }
 
     .quiz-title {
       background: linear-gradient(135deg, #1a1a2e, #2d2d44, #1a1a2e);
       color: white;
       text-align: center;
       font-weight: 700;
-      font-size: 1.8rem;
-      padding: 1rem 1.5rem;
-      border-radius: 60px;
-      margin: 1.5rem 0 2rem 0;
-      box-shadow: 0 10px 30px rgba(26, 26, 46, 0.3);
+      font-size: 1.1rem;
+      padding: 0.8rem 1rem;
+      border-radius: 40px;
+      margin: 1.2rem 0 1.5rem 0;
+      box-shadow: 0 8px 25px rgba(26, 26, 46, 0.3);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 10px;
       border: 1px solid rgba(255,255,255,0.08);
+    }
+    @media (min-width: 768px) {
+      .quiz-title {
+        font-size: 1.8rem;
+        padding: 1rem 1.5rem;
+        border-radius: 60px;
+        margin: 1.5rem 0 2rem 0;
+      }
+    }
+    @media (max-width: 480px) {
+      .quiz-title {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 30px;
+        margin: 0.8rem 0 1rem 0;
+        flex-direction: column;
+        gap: 8px;
+      }
     }
     .quiz-title span { 
       flex: 1; 
@@ -93,27 +145,56 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-size: 1.6rem;
+      font-size: 1rem;
+    }
+    @media (min-width: 768px) {
+      .quiz-title span {
+        font-size: 1.6rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .quiz-title span {
+        font-size: 0.85rem;
+      }
     }
     .lang-toggle {
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.15);
       border-radius: 40px;
-      padding: 5px 6px;
+      padding: 3px 4px;
       display: flex;
-      gap: 4px;
-      font-size: 0.85rem;
+      gap: 3px;
+      font-size: 0.7rem;
+    }
+    @media (min-width: 768px) {
+      .lang-toggle {
+        padding: 5px 6px;
+        gap: 4px;
+        font-size: 0.85rem;
+      }
     }
     .lang-toggle button {
       background: transparent;
       border: none;
-      padding: 6px 20px;
+      padding: 4px 12px;
       border-radius: 30px;
       font-weight: 600;
       color: #aabbdd;
       cursor: pointer;
       transition: 0.3s;
-      font-size: 0.85rem;
+      font-size: 0.7rem;
+    }
+    @media (min-width: 768px) {
+      .lang-toggle button {
+        padding: 6px 20px;
+        font-size: 0.85rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .lang-toggle button {
+        padding: 3px 8px;
+        font-size: 0.6rem;
+      }
     }
     .lang-toggle button.active {
       background: linear-gradient(135deg, #f7971e, #ffd200);
@@ -125,64 +206,124 @@
 
     .student-card {
       background: linear-gradient(135deg, #f0f4ff, #e8edf8);
-      border-radius: 30px;
-      padding: 1.8rem 2rem;
-      margin-bottom: 2.2rem;
+      border-radius: 20px;
+      padding: 1.2rem 1.2rem;
+      margin-bottom: 1.5rem;
       border: 1px solid rgba(255,255,255,0.5);
       box-shadow: inset 0 2px 10px rgba(255,255,255,0.6), 0 8px 20px rgba(0,0,0,0.05);
+    }
+    @media (min-width: 768px) {
+      .student-card {
+        padding: 1.8rem 2rem;
+        border-radius: 30px;
+        margin-bottom: 2.2rem;
+      }
     }
     .student-card h3 {
       font-weight: 700;
       color: #1a1a2e;
-      margin-bottom: 1.2rem;
+      margin-bottom: 0.8rem;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.25rem;
+      gap: 8px;
+      font-size: 1rem;
+    }
+    @media (min-width: 768px) {
+      .student-card h3 {
+        margin-bottom: 1.2rem;
+        font-size: 1.25rem;
+        gap: 10px;
+      }
     }
     .student-card h3::before {
       content: '👤';
-      font-size: 1.5rem;
+      font-size: 1.2rem;
+    }
+    @media (min-width: 768px) {
+      .student-card h3::before {
+        font-size: 1.5rem;
+      }
     }
     .input-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 10px;
+    }
+    @media (min-width: 768px) {
+      .input-group {
+        gap: 14px;
+      }
     }
     .input-group input, .input-group select {
-      flex: 1 1 170px;
-      padding: 15px 22px;
-      border-radius: 50px;
+      flex: 1 1 100%;
+      padding: 12px 16px;
+      border-radius: 40px;
       border: 2px solid #dce4f0;
       font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       background: white;
       outline: none;
       transition: 0.3s;
       box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      min-width: 0;
+    }
+    @media (min-width: 480px) {
+      .input-group input, .input-group select {
+        flex: 1 1 160px;
+        padding: 15px 22px;
+        font-size: 0.95rem;
+      }
+    }
+    @media (min-width: 768px) {
+      .input-group input, .input-group select {
+        flex: 1 1 170px;
+        padding: 15px 22px;
+      }
     }
     .input-group input:focus, .input-group select:focus {
       border-color: #f7971e;
-      box-shadow: 0 0 0 5px rgba(247, 151, 30, 0.12), 0 2px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 0 0 4px rgba(247, 151, 30, 0.12), 0 2px 10px rgba(0,0,0,0.05);
     }
     .input-group select {
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f7971e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 18px center;
-      background-size: 16px;
+      background-position: right 14px center;
+      background-size: 14px;
+    }
+    @media (min-width: 768px) {
+      .input-group select {
+        background-position: right 18px center;
+        background-size: 16px;
+      }
     }
 
     .question {
       background: linear-gradient(145deg, #ffffff, #f8faff);
-      border-radius: 24px;
-      padding: 1.4rem 2rem;
-      margin-bottom: 1.2rem;
-      border-left: 8px solid #f7971e;
+      border-radius: 18px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      border-left: 6px solid #f7971e;
       border: 1px solid #e8edf8;
-      border-left-width: 8px;
+      border-left-width: 6px;
       transition: 0.2s;
       box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    @media (min-width: 768px) {
+      .question {
+        padding: 1.4rem 2rem;
+        border-radius: 24px;
+        margin-bottom: 1.2rem;
+        border-left-width: 8px;
+      }
+    }
+    @media (max-width: 480px) {
+      .question {
+        padding: 0.8rem 0.9rem;
+        border-left-width: 4px;
+        margin-bottom: 0.8rem;
+        border-radius: 14px;
+      }
     }
     .question:hover {
       box-shadow: 0 4px 20px rgba(0,0,0,0.06);
@@ -190,21 +331,48 @@
     }
     .question h3 {
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 0.9rem;
       color: #1a1a2e;
-      margin-bottom: 0.9rem;
+      margin-bottom: 0.7rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
+    @media (min-width: 768px) {
+      .question h3 {
+        font-size: 1.05rem;
+        margin-bottom: 0.9rem;
+        gap: 8px;
+      }
+    }
+    @media (max-width: 480px) {
+      .question h3 {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+        gap: 4px;
+      }
+    }
     .question h3 .badge {
-      font-size: 0.65rem;
-      padding: 2px 14px;
+      font-size: 0.55rem;
+      padding: 2px 10px;
       border-radius: 30px;
       font-weight: 700;
-      margin-left: 6px;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
+    }
+    @media (min-width: 768px) {
+      .question h3 .badge {
+        font-size: 0.65rem;
+        padding: 2px 14px;
+        letter-spacing: 0.3px;
+        margin-left: 6px;
+      }
+    }
+    @media (max-width: 480px) {
+      .question h3 .badge {
+        font-size: 0.5rem;
+        padding: 1px 8px;
+      }
     }
     .badge-html { background: linear-gradient(135deg, #e44d26, #f16529); color: white; }
     .badge-css { background: linear-gradient(135deg, #2965f1, #1e4f8a); color: white; }
@@ -214,66 +382,147 @@
     .options {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      padding-left: 4px;
+      gap: 6px;
+      padding-left: 2px;
+    }
+    @media (min-width: 768px) {
+      .options {
+        gap: 8px;
+        padding-left: 4px;
+      }
     }
     .option-item {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
       background: #ffffff;
-      padding: 9px 20px 9px 16px;
-      border-radius: 60px;
+      padding: 7px 14px 7px 12px;
+      border-radius: 40px;
       border: 2px solid #e8edf8;
       transition: 0.2s ease;
       cursor: pointer;
     }
+    @media (min-width: 768px) {
+      .option-item {
+        gap: 14px;
+        padding: 9px 20px 9px 16px;
+        border-radius: 60px;
+      }
+    }
+    @media (max-width: 480px) {
+      .option-item {
+        padding: 5px 10px 5px 8px;
+        gap: 8px;
+        border-radius: 30px;
+        border-width: 1.5px;
+      }
+    }
     .option-item:hover {
       background: linear-gradient(135deg, #faf5ff, #f0f4ff);
       border-color: #c8d4e8;
-      transform: translateX(4px);
+      transform: translateX(2px);
+    }
+    @media (min-width: 768px) {
+      .option-item:hover {
+        transform: translateX(4px);
+      }
     }
     .option-item input[type="radio"] {
-      width: 17px;
-      height: 17px;
+      width: 15px;
+      height: 15px;
       accent-color: #f7971e;
       flex-shrink: 0;
       cursor: pointer;
+    }
+    @media (min-width: 768px) {
+      .option-item input[type="radio"] {
+        width: 17px;
+        height: 17px;
+      }
+    }
+    @media (max-width: 480px) {
+      .option-item input[type="radio"] {
+        width: 13px;
+        height: 13px;
+      }
     }
     .option-item input[type="radio"]:checked {
       accent-color: #f7971e;
     }
     .option-item label {
-      font-size: 0.95rem;
+      font-size: 0.82rem;
       font-weight: 450;
       color: #1d3148;
       cursor: pointer;
       flex: 1;
-      padding-top: 2px;
+      padding-top: 1px;
+    }
+    @media (min-width: 768px) {
+      .option-item label {
+        font-size: 0.95rem;
+        padding-top: 2px;
+      }
+    }
+    @media (max-width: 480px) {
+      .option-item label {
+        font-size: 0.72rem;
+        padding-top: 1px;
+      }
     }
 
     .feedback {
-      margin-top: 12px;
+      margin-top: 10px;
       font-weight: 600;
-      font-size: 0.9rem;
-      padding: 4px 0 0 8px;
+      font-size: 0.8rem;
+      padding: 3px 0 0 6px;
       border-radius: 30px;
+    }
+    @media (min-width: 768px) {
+      .feedback {
+        margin-top: 12px;
+        font-size: 0.9rem;
+        padding: 4px 0 0 8px;
+      }
+    }
+    @media (max-width: 480px) {
+      .feedback {
+        margin-top: 6px;
+        font-size: 0.7rem;
+        padding: 2px 0 0 4px;
+      }
     }
 
     .btn-submit {
       width: 100%;
-      padding: 1.1rem;
+      padding: 0.9rem;
       background: linear-gradient(135deg, #f7971e, #ffd200);
       border: none;
-      border-radius: 60px;
+      border-radius: 50px;
       color: #1a1a2e;
       font-weight: 700;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       cursor: pointer;
       transition: 0.3s;
       box-shadow: 0 10px 30px rgba(247, 151, 30, 0.35);
-      margin: 0.8rem 0 0.3rem 0;
-      letter-spacing: 0.5px;
+      margin: 0.6rem 0 0.2rem 0;
+      letter-spacing: 0.3px;
+    }
+    @media (min-width: 768px) {
+      .btn-submit {
+        padding: 1.1rem;
+        font-size: 1.3rem;
+        border-radius: 60px;
+        margin: 0.8rem 0 0.3rem 0;
+        letter-spacing: 0.5px;
+      }
+    }
+    @media (max-width: 480px) {
+      .btn-submit {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+        border-radius: 40px;
+        margin: 0.4rem 0 0.1rem 0;
+      }
     }
     .btn-submit:hover { 
       transform: scale(1.02); 
@@ -284,77 +533,157 @@
     .result-panel {
       display: none;
       background: linear-gradient(135deg, #e8f5ed, #d4efe0);
-      border-radius: 32px;
-      padding: 2rem 2.5rem;
-      margin-top: 2.2rem;
+      border-radius: 24px;
+      padding: 1.5rem 1.5rem;
+      margin-top: 1.5rem;
       border: 2px solid #a8d5b8;
       box-shadow: inset 0 2px 20px rgba(255,255,255,0.5), 0 10px 30px rgba(0,0,0,0.05);
     }
+    @media (min-width: 768px) {
+      .result-panel {
+        padding: 2rem 2.5rem;
+        border-radius: 32px;
+        margin-top: 2.2rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .result-panel {
+        padding: 1rem 1rem;
+        border-radius: 18px;
+        margin-top: 1rem;
+      }
+    }
     .result-panel h2 {
       font-weight: 800;
-      font-size: 2.4rem;
+      font-size: 1.6rem;
       color: #0d3b2a;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
+    }
+    @media (min-width: 768px) {
+      .result-panel h2 {
+        font-size: 2.4rem;
+        gap: 14px;
+      }
+    }
+    @media (max-width: 480px) {
+      .result-panel h2 {
+        font-size: 1.2rem;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
     }
     .result-panel h2::before {
       content: '🏆';
-      font-size: 2.8rem;
+      font-size: 1.8rem;
+    }
+    @media (min-width: 768px) {
+      .result-panel h2::before {
+        font-size: 2.8rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .result-panel h2::before {
+        font-size: 1.4rem;
+      }
     }
     .result-panel .percent {
       font-weight: 600;
-      font-size: 1.5rem;
+      font-size: 1.1rem;
       color: #1d5a3e;
-      margin: 0.4rem 0 1.4rem 0;
+      margin: 0.3rem 0 1rem 0;
       background: rgba(255,255,255,0.5);
-      padding: 8px 20px;
+      padding: 6px 16px;
       border-radius: 40px;
       display: inline-block;
+    }
+    @media (min-width: 768px) {
+      .result-panel .percent {
+        font-size: 1.5rem;
+        margin: 0.4rem 0 1.4rem 0;
+        padding: 8px 20px;
+      }
+    }
+    @media (max-width: 480px) {
+      .result-panel .percent {
+        font-size: 0.9rem;
+        padding: 4px 12px;
+        margin: 0.2rem 0 0.6rem 0;
+      }
     }
     .wa-button {
       background: #25D366;
       color: white;
       border: none;
-      padding: 16px 36px;
-      border-radius: 60px;
+      padding: 12px 24px;
+      border-radius: 50px;
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 0.95rem;
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
       transition: 0.3s;
       box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
       text-decoration: none;
+    }
+    @media (min-width: 768px) {
+      .wa-button {
+        padding: 16px 36px;
+        font-size: 1.15rem;
+        border-radius: 60px;
+        gap: 12px;
+      }
+    }
+    @media (max-width: 480px) {
+      .wa-button {
+        padding: 10px 18px;
+        font-size: 0.8rem;
+        border-radius: 40px;
+        gap: 6px;
+      }
     }
     .wa-button:hover { 
       background: #1fc45a; 
       transform: scale(1.03); 
       box-shadow: 0 12px 35px rgba(37, 211, 102, 0.45);
     }
-    .wa-link-wrap { margin-top: 1.2rem; display: inline-block; }
+    .wa-link-wrap { margin-top: 0.8rem; display: inline-block; }
+    @media (min-width: 768px) {
+      .wa-link-wrap { margin-top: 1.2rem; }
+    }
 
     .questions-scroll {
-      max-height: 650px;
+      max-height: 500px;
       overflow-y: auto;
-      padding-right: 8px;
+      padding-right: 4px;
       margin-bottom: 0.5rem;
+      -webkit-overflow-scrolling: touch;
     }
-    .questions-scroll::-webkit-scrollbar { width: 8px; }
+    @media (min-width: 768px) {
+      .questions-scroll {
+        max-height: 650px;
+        padding-right: 8px;
+        margin-bottom: 0.5rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .questions-scroll {
+        max-height: 400px;
+        padding-right: 2px;
+      }
+    }
+    .questions-scroll::-webkit-scrollbar { width: 4px; }
+    @media (min-width: 768px) {
+      .questions-scroll::-webkit-scrollbar { width: 8px; }
+    }
     .questions-scroll::-webkit-scrollbar-track { background: #eef3fc; border-radius: 10px; }
     .questions-scroll::-webkit-scrollbar-thumb { 
       background: linear-gradient(135deg, #f7971e, #ffd200);
       border-radius: 10px; 
     }
     .questions-scroll::-webkit-scrollbar-thumb:hover { background: #e08a1a; }
-
-    .subject-counter {
-      font-size: 0.8rem;
-      color: #6a7a8a;
-      margin-left: 10px;
-      font-weight: 500;
-    }
   </style>
 </head>
 <body>
@@ -369,7 +698,7 @@
   <div class="quiz-title">
     <span>📚 Mega Quiz · 50 Questions</span>
     <div class="lang-toggle">
-      <button id="langEn" class="active" onclick="setLanguage('en')">English</button>
+      <button id="langEn" class="active" onclick="setLanguage('en')">EN</button>
       <button id="langUr" onclick="setLanguage('ur')">اردو</button>
     </div>
   </div>
@@ -381,11 +710,11 @@
       <input id="name" type="text" placeholder="Student Name">
       <input id="roll" type="text" placeholder="Roll Number">
       <select id="course">
-        <option value="DIT">DIT (Diploma in Information Technology)</option>
-        <option value="CIT" selected>CIT (Certificate in Information Technology)</option>
-        <option value="OAT">OAT (Office Automation Technology)</option>
+        <option value="DIT">DIT (Diploma in IT)</option>
+        <option value="CIT" selected>CIT (Certificate in IT)</option>
+        <option value="OAT">OAT (Office Automation)</option>
         <option value="ADIT">ADIT (Advanced Diploma in IT)</option>
-        <option value="DCS">DCS (Diploma in Computer Science)</option>
+        <option value="DCS">DCS (Diploma in CS)</option>
       </select>
     </div>
   </div>
@@ -430,13 +759,10 @@
     
     // ===== C Programming (15-24) =====
     { subject: 'C', en: "C language kisne banai?", ur: "C زبان کس نے بنائی؟", opts: { en: ["Dennis Ritchie", "Bjarne Stroustrup", "James Gosling"], ur: ["ڈینس ریچی", "بیجرن سٹراسٹرپ", "جیمز گوسلنگ"] }, correct: 0 },
-    { subject: 'C', en: "C language ka parent language?", ur: "C زبان کی بنیاد کونسی زبان ہے؟", opts: { en: ["B Language", "Pascal", "Fortran"], ur: ["بی زبان", "پاسکل", "فورٹران"] }, correct: 0 },
     { subject: 'C', en: "Which header file is used for printf()?", ur: "printf() کے لیے کونسی ہیڈر فائل استعمال ہوتی ہے؟", opts: { en: ["stdio.h", "stdlib.h", "string.h"], ur: ["stdio.h", "stdlib.h", "string.h"] }, correct: 0 },
     { subject: 'C', en: "Which of these is NOT a valid data type in C?", ur: "C میں کونسا ڈیٹا ٹائپ درست نہیں ہے؟", opts: { en: ["int", "float", "string"], ur: ["int", "float", "string"] }, correct: 2 },
     { subject: 'C', en: "Which operator is used for address of a variable in C?", ur: "C میں متغیر کا ایڈریس حاصل کرنے کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["*", "&", "#"], ur: ["*", "&", "#"] }, correct: 1 },
     { subject: 'C', en: "Which loop runs at least once in C?", ur: "C میں کونسا لوپ کم از کم ایک بار ضرور چلتا ہے؟", opts: { en: ["do-while", "while", "for"], ur: ["do-while", "while", "for"] }, correct: 0 },
-    { subject: 'C', en: "Which keyword is used to define a constant in C?", ur: "C میں کونسا کی ورڈ کانسٹنٹ ڈیفائن کرنے کے لیے استعمال ہوتا ہے؟", opts: { en: ["const", "define", "constant"], ur: ["const", "define", "constant"] }, correct: 0 },
-    { subject: 'C', en: "Which function is used to allocate memory in C?", ur: "C میں میموری الوکیٹ کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["malloc()", "alloc()", "new()"], ur: ["malloc()", "alloc()", "new()"] }, correct: 0 },
     { subject: 'C', en: "Which operator is used for logical AND in C?", ur: "C میں لاجیکل AND کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["&&", "||", "&"], ur: ["&&", "||", "&"] }, correct: 0 },
     { subject: 'C', en: "What is the size of int in 32-bit C compiler?", ur: "32-bit C کمپائلر میں int کا سائز کیا ہے؟", opts: { en: ["4 bytes", "2 bytes", "8 bytes"], ur: ["4 بائٹس", "2 بائٹس", "8 بائٹس"] }, correct: 0 },
     
@@ -527,7 +853,7 @@
       `;
     });
     container.innerHTML = html;
-    document.getElementById('quiz-title').querySelector('span').innerHTML = lang === 'en' ? '📚 Mega Quiz · 50 Questions' : '📚 میگا کوئز · ۵۰ سوالات';
+    document.querySelector('.quiz-title span').innerHTML = lang === 'en' ? '📚 Mega Quiz · 50 Questions' : '📚 میگا کوئز · ۵۰ سوالات';
     document.getElementById('name').placeholder = lang === 'en' ? 'Student Name' : 'طالب علم کا نام';
     document.getElementById('roll').placeholder = lang === 'en' ? 'Roll Number' : 'رول نمبر';
     document.getElementById('result').style.display = 'none';
