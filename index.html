@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>WebCode · Mega Quiz (HTML+CSS+C+MS Office) 50 Q</title>
+  <title>Noor Mustafa Mega Quiz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -17,7 +17,76 @@
       align-items: center;
       justify-content: center;
       padding: 1rem;
+      transition: background 0.3s;
     }
+    body.dark-mode {
+      background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #0a0a0a);
+    }
+    body.dark-mode .quiz-card {
+      background: linear-gradient(145deg, #1a1a2e, #16213e);
+      color: #e0e0e0;
+    }
+    body.dark-mode .student-card {
+      background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+      border-color: #3a3a5a;
+    }
+    body.dark-mode .question {
+      background: linear-gradient(145deg, #1f1f3a, #2a2a4a);
+      border-color: #3a3a5a;
+    }
+    body.dark-mode .question h3 { color: #e0e0e0; }
+    body.dark-mode .option-item {
+      background: #2a2a4a;
+      border-color: #4a4a6a;
+    }
+    body.dark-mode .option-item label { color: #d0d0e0; }
+    body.dark-mode .option-item:hover {
+      background: #3a3a5a;
+      border-color: #6a6a8a;
+    }
+    body.dark-mode .quiz-title {
+      background: linear-gradient(135deg, #2d2d44, #3a3a5a);
+    }
+    body.dark-mode .institute-header h1 {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    body.dark-mode .footer {
+      border-top-color: #3a3a5a;
+      color: #8a8aaa;
+    }
+    body.dark-mode .input-group input, body.dark-mode .input-group select {
+      background: #2a2a4a;
+      border-color: #4a4a6a;
+      color: #e0e0e0;
+    }
+    body.dark-mode .feedback { color: #e0e0e0; }
+    body.dark-mode .result-panel {
+      background: linear-gradient(135deg, #1a3a2a, #1a4a3a);
+      border-color: #3a6a4a;
+    }
+    body.dark-mode .result-panel h2 { color: #8ae0a0; }
+    body.dark-mode .result-panel .percent { color: #6ac080; }
+    body.dark-mode .filter-tab {
+      color: #d0d0e0;
+      border-color: #4a4a6a;
+    }
+    body.dark-mode .filter-tab.active {
+      color: white;
+    }
+    body.dark-mode .top-controls button {
+      color: #aabbdd;
+    }
+    body.dark-mode .nav-btn {
+      background: #2a2a4a;
+      color: #d0d0e0;
+      border-color: #4a4a6a;
+    }
+    body.dark-mode .nav-btn:hover {
+      background: #3a3a5a;
+    }
+
     .quiz-card {
       max-width: 1200px;
       width: 100%;
@@ -27,24 +96,16 @@
       box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
       transition: all 0.3s;
     }
-    
     @media (min-width: 768px) {
-      .quiz-card {
-        padding: 2.8rem 3rem;
-        border-radius: 50px;
-      }
+      .quiz-card { padding: 2.8rem 3rem; border-radius: 50px; }
     }
-    
     @media (max-width: 480px) {
-      .quiz-card {
-        padding: 1rem 0.8rem;
-        border-radius: 20px;
-      }
+      .quiz-card { padding: 1rem 0.8rem; border-radius: 20px; }
     }
     
     .institute-header {
       text-align: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       position: relative;
     }
     .institute-header::after {
@@ -59,10 +120,7 @@
       border-radius: 4px;
     }
     @media (min-width: 768px) {
-      .institute-header::after {
-        width: 100px;
-        height: 4px;
-      }
+      .institute-header::after { width: 100px; height: 4px; }
     }
     .institute-header h1 {
       font-weight: 800;
@@ -74,15 +132,10 @@
       letter-spacing: -0.3px;
     }
     @media (min-width: 768px) {
-      .institute-header h1 {
-        font-size: 2.8rem;
-        letter-spacing: -0.5px;
-      }
+      .institute-header h1 { font-size: 2.8rem; letter-spacing: -0.5px; }
     }
     @media (max-width: 480px) {
-      .institute-header h1 {
-        font-size: 1.4rem;
-      }
+      .institute-header h1 { font-size: 1.4rem; }
     }
     .institute-header .subhead {
       font-weight: 500;
@@ -97,12 +150,17 @@
       background-clip: text;
     }
     @media (min-width: 768px) {
-      .institute-header .subhead {
-        font-size: 1rem;
-        letter-spacing: 0.5px;
-      }
+      .institute-header .subhead { font-size: 1rem; letter-spacing: 0.5px; }
     }
 
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+    }
     .quiz-title {
       background: linear-gradient(135deg, #1a1a2e, #2d2d44, #1a1a2e);
       color: white;
@@ -111,7 +169,6 @@
       font-size: 1.1rem;
       padding: 0.8rem 1rem;
       border-radius: 40px;
-      margin: 1.2rem 0 1.5rem 0;
       box-shadow: 0 8px 25px rgba(26, 26, 46, 0.3);
       display: flex;
       align-items: center;
@@ -119,13 +176,13 @@
       flex-wrap: wrap;
       gap: 10px;
       border: 1px solid rgba(255,255,255,0.08);
+      flex: 1;
     }
     @media (min-width: 768px) {
       .quiz-title {
         font-size: 1.8rem;
         padding: 1rem 1.5rem;
         border-radius: 60px;
-        margin: 1.5rem 0 2rem 0;
       }
     }
     @media (max-width: 480px) {
@@ -133,7 +190,6 @@
         font-size: 0.9rem;
         padding: 0.6rem 0.8rem;
         border-radius: 30px;
-        margin: 0.8rem 0 1rem 0;
         flex-direction: column;
         gap: 8px;
       }
@@ -148,14 +204,17 @@
       font-size: 1rem;
     }
     @media (min-width: 768px) {
-      .quiz-title span {
-        font-size: 1.6rem;
-      }
+      .quiz-title span { font-size: 1.6rem; }
     }
     @media (max-width: 480px) {
-      .quiz-title span {
-        font-size: 0.85rem;
-      }
+      .quiz-title span { font-size: 0.85rem; }
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .lang-toggle {
       background: rgba(255,255,255,0.08);
@@ -167,11 +226,7 @@
       font-size: 0.7rem;
     }
     @media (min-width: 768px) {
-      .lang-toggle {
-        padding: 5px 6px;
-        gap: 4px;
-        font-size: 0.85rem;
-      }
+      .lang-toggle { padding: 5px 6px; gap: 4px; font-size: 0.85rem; }
     }
     .lang-toggle button {
       background: transparent;
@@ -185,16 +240,10 @@
       font-size: 0.7rem;
     }
     @media (min-width: 768px) {
-      .lang-toggle button {
-        padding: 6px 20px;
-        font-size: 0.85rem;
-      }
+      .lang-toggle button { padding: 6px 20px; font-size: 0.85rem; }
     }
     @media (max-width: 480px) {
-      .lang-toggle button {
-        padding: 3px 8px;
-        font-size: 0.6rem;
-      }
+      .lang-toggle button { padding: 3px 8px; font-size: 0.6rem; }
     }
     .lang-toggle button.active {
       background: linear-gradient(135deg, #f7971e, #ffd200);
@@ -203,6 +252,53 @@
     }
     .lang-toggle button:hover { background: rgba(255,255,255,0.1); }
     .lang-toggle button.active:hover { background: linear-gradient(135deg, #f7971e, #ffd200); }
+
+    .dark-toggle {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 40px;
+      padding: 3px 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: 0.3s;
+      color: #aabbdd;
+      border: none;
+    }
+    .dark-toggle:hover { background: rgba(255,255,255,0.15); }
+    @media (min-width: 768px) {
+      .dark-toggle { padding: 5px 12px; font-size: 1.3rem; }
+    }
+
+    .progress-container {
+      margin-bottom: 1rem;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    body.dark-mode .progress-bar {
+      background: rgba(255,255,255,0.1);
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f7971e, #ffd200);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+    .progress-text {
+      color: #6a7a8a;
+      font-size: 0.7rem;
+      margin-top: 4px;
+      text-align: right;
+    }
+    @media (min-width: 768px) {
+      .progress-text { font-size: 0.8rem; }
+    }
+    body.dark-mode .progress-text { color: #aabbdd; }
 
     .student-card {
       background: linear-gradient(135deg, #f0f4ff, #e8edf8);
@@ -213,11 +309,7 @@
       box-shadow: inset 0 2px 10px rgba(255,255,255,0.6), 0 8px 20px rgba(0,0,0,0.05);
     }
     @media (min-width: 768px) {
-      .student-card {
-        padding: 1.8rem 2rem;
-        border-radius: 30px;
-        margin-bottom: 2.2rem;
-      }
+      .student-card { padding: 1.8rem 2rem; border-radius: 30px; margin-bottom: 2.2rem; }
     }
     .student-card h3 {
       font-weight: 700;
@@ -229,20 +321,11 @@
       font-size: 1rem;
     }
     @media (min-width: 768px) {
-      .student-card h3 {
-        margin-bottom: 1.2rem;
-        font-size: 1.25rem;
-        gap: 10px;
-      }
+      .student-card h3 { margin-bottom: 1.2rem; font-size: 1.25rem; gap: 10px; }
     }
-    .student-card h3::before {
-      content: '👤';
-      font-size: 1.2rem;
-    }
+    .student-card h3::before { content: '👤'; font-size: 1.2rem; }
     @media (min-width: 768px) {
-      .student-card h3::before {
-        font-size: 1.5rem;
-      }
+      .student-card h3::before { font-size: 1.5rem; }
     }
     .input-group {
       display: flex;
@@ -250,9 +333,7 @@
       gap: 10px;
     }
     @media (min-width: 768px) {
-      .input-group {
-        gap: 14px;
-      }
+      .input-group { gap: 14px; }
     }
     .input-group input, .input-group select {
       flex: 1 1 100%;
@@ -292,11 +373,40 @@
       background-size: 14px;
     }
     @media (min-width: 768px) {
-      .input-group select {
-        background-position: right 18px center;
-        background-size: 16px;
-      }
+      .input-group select { background-position: right 18px center; background-size: 16px; }
     }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 1.2rem;
+    }
+    .filter-tab {
+      padding: 6px 18px;
+      border-radius: 30px;
+      border: 2px solid #dce4f0;
+      background: transparent;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #1a1a2e;
+    }
+    .filter-tab:hover { transform: scale(1.02); }
+    .filter-tab.active {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      border-color: #f7971e;
+      color: #1a1a2e;
+    }
+    .filter-tab.html-tab { border-color: #e44d26; }
+    .filter-tab.html-tab.active { background: #e44d26; border-color: #e44d26; color: white; }
+    .filter-tab.css-tab { border-color: #2965f1; }
+    .filter-tab.css-tab.active { background: #2965f1; border-color: #2965f1; color: white; }
+    .filter-tab.c-tab { border-color: #00599c; }
+    .filter-tab.c-tab.active { background: #00599c; border-color: #00599c; color: white; }
+    .filter-tab.office-tab { border-color: #d83b01; }
+    .filter-tab.office-tab.active { background: #d83b01; border-color: #d83b01; color: white; }
 
     .question {
       background: linear-gradient(145deg, #ffffff, #f8faff);
@@ -309,6 +419,7 @@
       transition: 0.2s;
       box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
+    .question.hidden { display: none; }
     @media (min-width: 768px) {
       .question {
         padding: 1.4rem 2rem;
@@ -340,18 +451,10 @@
       flex-wrap: wrap;
     }
     @media (min-width: 768px) {
-      .question h3 {
-        font-size: 1.05rem;
-        margin-bottom: 0.9rem;
-        gap: 8px;
-      }
+      .question h3 { font-size: 1.05rem; margin-bottom: 0.9rem; gap: 8px; }
     }
     @media (max-width: 480px) {
-      .question h3 {
-        font-size: 0.8rem;
-        margin-bottom: 0.5rem;
-        gap: 4px;
-      }
+      .question h3 { font-size: 0.8rem; margin-bottom: 0.5rem; gap: 4px; }
     }
     .question h3 .badge {
       font-size: 0.55rem;
@@ -361,18 +464,10 @@
       letter-spacing: 0.2px;
     }
     @media (min-width: 768px) {
-      .question h3 .badge {
-        font-size: 0.65rem;
-        padding: 2px 14px;
-        letter-spacing: 0.3px;
-        margin-left: 6px;
-      }
+      .question h3 .badge { font-size: 0.65rem; padding: 2px 14px; letter-spacing: 0.3px; margin-left: 6px; }
     }
     @media (max-width: 480px) {
-      .question h3 .badge {
-        font-size: 0.5rem;
-        padding: 1px 8px;
-      }
+      .question h3 .badge { font-size: 0.5rem; padding: 1px 8px; }
     }
     .badge-html { background: linear-gradient(135deg, #e44d26, #f16529); color: white; }
     .badge-css { background: linear-gradient(135deg, #2965f1, #1e4f8a); color: white; }
@@ -386,10 +481,7 @@
       padding-left: 2px;
     }
     @media (min-width: 768px) {
-      .options {
-        gap: 8px;
-        padding-left: 4px;
-      }
+      .options { gap: 8px; padding-left: 4px; }
     }
     .option-item {
       display: flex;
@@ -403,19 +495,10 @@
       cursor: pointer;
     }
     @media (min-width: 768px) {
-      .option-item {
-        gap: 14px;
-        padding: 9px 20px 9px 16px;
-        border-radius: 60px;
-      }
+      .option-item { gap: 14px; padding: 9px 20px 9px 16px; border-radius: 60px; }
     }
     @media (max-width: 480px) {
-      .option-item {
-        padding: 5px 10px 5px 8px;
-        gap: 8px;
-        border-radius: 30px;
-        border-width: 1.5px;
-      }
+      .option-item { padding: 5px 10px 5px 8px; gap: 8px; border-radius: 30px; border-width: 1.5px; }
     }
     .option-item:hover {
       background: linear-gradient(135deg, #faf5ff, #f0f4ff);
@@ -423,9 +506,7 @@
       transform: translateX(2px);
     }
     @media (min-width: 768px) {
-      .option-item:hover {
-        transform: translateX(4px);
-      }
+      .option-item:hover { transform: translateX(4px); }
     }
     .option-item input[type="radio"] {
       width: 15px;
@@ -435,20 +516,12 @@
       cursor: pointer;
     }
     @media (min-width: 768px) {
-      .option-item input[type="radio"] {
-        width: 17px;
-        height: 17px;
-      }
+      .option-item input[type="radio"] { width: 17px; height: 17px; }
     }
     @media (max-width: 480px) {
-      .option-item input[type="radio"] {
-        width: 13px;
-        height: 13px;
-      }
+      .option-item input[type="radio"] { width: 13px; height: 13px; }
     }
-    .option-item input[type="radio"]:checked {
-      accent-color: #f7971e;
-    }
+    .option-item input[type="radio"]:checked { accent-color: #f7971e; }
     .option-item label {
       font-size: 0.82rem;
       font-weight: 450;
@@ -458,16 +531,10 @@
       padding-top: 1px;
     }
     @media (min-width: 768px) {
-      .option-item label {
-        font-size: 0.95rem;
-        padding-top: 2px;
-      }
+      .option-item label { font-size: 0.95rem; padding-top: 2px; }
     }
     @media (max-width: 480px) {
-      .option-item label {
-        font-size: 0.72rem;
-        padding-top: 1px;
-      }
+      .option-item label { font-size: 0.72rem; padding-top: 1px; }
     }
 
     .feedback {
@@ -478,18 +545,71 @@
       border-radius: 30px;
     }
     @media (min-width: 768px) {
-      .feedback {
-        margin-top: 12px;
-        font-size: 0.9rem;
-        padding: 4px 0 0 8px;
-      }
+      .feedback { margin-top: 12px; font-size: 0.9rem; padding: 4px 0 0 8px; }
     }
     @media (max-width: 480px) {
-      .feedback {
-        margin-top: 6px;
-        font-size: 0.7rem;
-        padding: 2px 0 0 4px;
-      }
+      .feedback { margin-top: 6px; font-size: 0.7rem; padding: 2px 0 0 4px; }
+    }
+
+    /* Navigation Buttons */
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 0.8rem 0 0.5rem 0;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      padding: 8px 20px;
+      border-radius: 40px;
+      border: 2px solid #dce4f0;
+      background: white;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #1a1a2e;
+    }
+    .nav-btn:hover {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      border-color: #f7971e;
+      transform: scale(1.02);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .nav-btn:disabled:hover {
+      background: white;
+      border-color: #dce4f0;
+      transform: none;
+    }
+    body.dark-mode .nav-btn {
+      background: #2a2a4a;
+      color: #d0d0e0;
+      border-color: #4a4a6a;
+    }
+    body.dark-mode .nav-btn:hover {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      color: #1a1a2e;
+      border-color: #f7971e;
+    }
+    body.dark-mode .nav-btn:disabled:hover {
+      background: #2a2a4a;
+      color: #d0d0e0;
+      border-color: #4a4a6a;
+    }
+    .nav-info {
+      font-size: 0.85rem;
+      color: #6a7a8a;
+      font-weight: 500;
+    }
+    body.dark-mode .nav-info { color: #aabbdd; }
+    @media (max-width: 480px) {
+      .nav-btn { padding: 6px 14px; font-size: 0.75rem; }
+      .nav-info { font-size: 0.75rem; }
     }
 
     .btn-submit {
@@ -529,6 +649,10 @@
       box-shadow: 0 14px 40px rgba(247, 151, 30, 0.45);
     }
     .btn-submit:active { transform: scale(0.97); }
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
     .result-panel {
       display: none;
@@ -540,18 +664,10 @@
       box-shadow: inset 0 2px 20px rgba(255,255,255,0.5), 0 10px 30px rgba(0,0,0,0.05);
     }
     @media (min-width: 768px) {
-      .result-panel {
-        padding: 2rem 2.5rem;
-        border-radius: 32px;
-        margin-top: 2.2rem;
-      }
+      .result-panel { padding: 2rem 2.5rem; border-radius: 32px; margin-top: 2.2rem; }
     }
     @media (max-width: 480px) {
-      .result-panel {
-        padding: 1rem 1rem;
-        border-radius: 18px;
-        margin-top: 1rem;
-      }
+      .result-panel { padding: 1rem 1rem; border-radius: 18px; margin-top: 1rem; }
     }
     .result-panel h2 {
       font-weight: 800;
@@ -562,31 +678,17 @@
       gap: 10px;
     }
     @media (min-width: 768px) {
-      .result-panel h2 {
-        font-size: 2.4rem;
-        gap: 14px;
-      }
+      .result-panel h2 { font-size: 2.4rem; gap: 14px; }
     }
     @media (max-width: 480px) {
-      .result-panel h2 {
-        font-size: 1.2rem;
-        gap: 6px;
-        flex-wrap: wrap;
-      }
+      .result-panel h2 { font-size: 1.2rem; gap: 6px; flex-wrap: wrap; }
     }
-    .result-panel h2::before {
-      content: '🏆';
-      font-size: 1.8rem;
-    }
+    .result-panel h2::before { content: '🏆'; font-size: 1.8rem; }
     @media (min-width: 768px) {
-      .result-panel h2::before {
-        font-size: 2.8rem;
-      }
+      .result-panel h2::before { font-size: 2.8rem; }
     }
     @media (max-width: 480px) {
-      .result-panel h2::before {
-        font-size: 1.4rem;
-      }
+      .result-panel h2::before { font-size: 1.4rem; }
     }
     .result-panel .percent {
       font-weight: 600;
@@ -599,19 +701,57 @@
       display: inline-block;
     }
     @media (min-width: 768px) {
-      .result-panel .percent {
-        font-size: 1.5rem;
-        margin: 0.4rem 0 1.4rem 0;
-        padding: 8px 20px;
-      }
+      .result-panel .percent { font-size: 1.5rem; margin: 0.4rem 0 1.4rem 0; padding: 8px 20px; }
     }
     @media (max-width: 480px) {
-      .result-panel .percent {
-        font-size: 0.9rem;
-        padding: 4px 12px;
-        margin: 0.2rem 0 0.6rem 0;
-      }
+      .result-panel .percent { font-size: 0.9rem; padding: 4px 12px; margin: 0.2rem 0 0.6rem 0; }
     }
+
+    .subject-result {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 15px 0;
+    }
+    .subject-result-item {
+      background: rgba(255,255,255,0.6);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    @media (min-width: 768px) {
+      .subject-result-item { padding: 8px 18px; font-size: 0.95rem; }
+    }
+    .subject-result-item .s-name { color: #1a1a2e; }
+    .subject-result-item .s-score { color: #0d3b2a; }
+
+    .review-section {
+      margin-top: 1rem;
+      border-top: 2px solid rgba(0,0,0,0.1);
+      padding-top: 1rem;
+    }
+    .review-section h3 {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      color: #0d3b2a;
+    }
+    .review-item {
+      padding: 6px 0;
+      font-size: 0.75rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    @media (min-width: 768px) {
+      .review-item { font-size: 0.9rem; padding: 8px 0; }
+    }
+    .review-item.correct { color: #0f6b3a; }
+    .review-item.wrong { color: #b13e3e; }
+    .review-item .q-text { flex: 1; }
+
     .wa-button {
       background: #25D366;
       color: white;
@@ -629,20 +769,10 @@
       text-decoration: none;
     }
     @media (min-width: 768px) {
-      .wa-button {
-        padding: 16px 36px;
-        font-size: 1.15rem;
-        border-radius: 60px;
-        gap: 12px;
-      }
+      .wa-button { padding: 16px 36px; font-size: 1.15rem; border-radius: 60px; gap: 12px; }
     }
     @media (max-width: 480px) {
-      .wa-button {
-        padding: 10px 18px;
-        font-size: 0.8rem;
-        border-radius: 40px;
-        gap: 6px;
-      }
+      .wa-button { padding: 10px 18px; font-size: 0.8rem; border-radius: 40px; gap: 6px; }
     }
     .wa-button:hover { 
       background: #1fc45a; 
@@ -658,21 +788,14 @@
       max-height: 500px;
       overflow-y: auto;
       padding-right: 4px;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       -webkit-overflow-scrolling: touch;
     }
     @media (min-width: 768px) {
-      .questions-scroll {
-        max-height: 650px;
-        padding-right: 8px;
-        margin-bottom: 0.5rem;
-      }
+      .questions-scroll { max-height: 650px; padding-right: 8px; }
     }
     @media (max-width: 480px) {
-      .questions-scroll {
-        max-height: 400px;
-        padding-right: 2px;
-      }
+      .questions-scroll { max-height: 400px; padding-right: 2px; }
     }
     .questions-scroll::-webkit-scrollbar { width: 4px; }
     @media (min-width: 768px) {
@@ -684,6 +807,35 @@
       border-radius: 10px; 
     }
     .questions-scroll::-webkit-scrollbar-thumb:hover { background: #e08a1a; }
+
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 2px solid #e8edf8;
+      font-size: 0.8rem;
+      color: #6a7a8a;
+      font-weight: 500;
+    }
+    @media (min-width: 768px) {
+      .footer { font-size: 0.95rem; margin-top: 2.5rem; padding-top: 1.5rem; }
+    }
+    .footer span {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+    .footer .copyright {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.7rem;
+      color: #8a9aaa;
+    }
+    @media (min-width: 768px) {
+      .footer .copyright { font-size: 0.8rem; }
+    }
   </style>
 </head>
 <body>
@@ -691,16 +843,29 @@
 <div class="quiz-card">
 
   <div class="institute-header">
-    <h1>WEBCODE INSTITUTE</h1>
-    <div class="subhead">IT &amp; ENGLISH LANGUAGE</div>
+    <h1>NOOR MUSTAFA JATOI</h1>
+    
   </div>
 
-  <div class="quiz-title">
-    <span>📚 Mega Quiz · 50 Questions</span>
-    <div class="lang-toggle">
-      <button id="langEn" class="active" onclick="setLanguage('en')">EN</button>
-      <button id="langUr" onclick="setLanguage('ur')">اردو</button>
+  <div class="top-bar">
+    <div class="quiz-title">
+      <span>🏆 Noor Mustafa Mega Quiz</span>
+      <div class="top-controls">
+        <div class="lang-toggle">
+          <button id="langEn" class="active" onclick="setLanguage('en')">EN</button>
+          <button id="langUr" onclick="setLanguage('ur')">اردو</button>
+        </div>
+        <button class="dark-toggle" onclick="toggleDark()">🌓</button>
+      </div>
     </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-text" id="progressText">0 / 55 answered</div>
   </div>
 
   <!-- Student -->
@@ -719,105 +884,228 @@
     </div>
   </div>
 
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all" onclick="filterQuestions('all', this)">📌 All</button>
+    <button class="filter-tab html-tab" data-filter="HTML" onclick="filterQuestions('HTML', this)">🟠 HTML</button>
+    <button class="filter-tab css-tab" data-filter="CSS" onclick="filterQuestions('CSS', this)">🔵 CSS</button>
+    <button class="filter-tab c-tab" data-filter="C" onclick="filterQuestions('C', this)">🔷 C Prog.</button>
+    <button class="filter-tab office-tab" data-filter="Office" onclick="filterQuestions('Office', this)">🔴 MS Office</button>
+  </div>
+
   <!-- Questions -->
   <div class="questions-scroll" id="questionsContainer"></div>
 
-  <button class="btn-submit" onclick="quiz()">✅ Submit Quiz</button>
+  <!-- Navigation -->
+  <div class="nav-container">
+    <button class="nav-btn" id="prevBtn" onclick="navigateQuestions('prev')">◀ Previous</button>
+    <span class="nav-info" id="navInfo">Showing: All Questions</span>
+    <button class="nav-btn" id="nextBtn" onclick="navigateQuestions('next')">Next ▶</button>
+  </div>
+
+  <button class="btn-submit" id="submitBtn" onclick="quiz()">✅ Submit Quiz</button>
 
   <div class="result-panel" id="result">
     <h2 id="score"></h2>
     <div class="percent" id="percent"></div>
+    <div class="subject-result" id="subjectResult"></div>
+    <div class="review-section" id="reviewSection">
+      <h3>📝 Review Your Answers:</h3>
+      <div id="reviewList"></div>
+    </div>
     <div>
       <a id="waLink" target="_blank" class="wa-link-wrap">
         <button class="wa-button">📱 Send Result To Teacher</button>
       </a>
     </div>
   </div>
+
+  <div class="footer">
+    Created by <span>Noor Mustafa Jatoi PJG</span>
+    <span class="copyright">© 2024 WebCode Institute. All Rights Reserved.</span>
+  </div>
 </div>
 
 <script>
-  // ---------- 50 Questions (10 HTML + 5 CSS + 10 C + 25 MS Office) ----------
+  // ---------- 55 Questions ----------
   const questions = [
     // ===== HTML (0-9) =====
     { subject: 'HTML', en: "HTML ka Full Form?", ur: "HTML کا مکمل نام؟", opts: { en: ["Hyper Text Markup Language", "Home Tool Markup Language", "High Tech Modern Language"], ur: ["ہائپر ٹیکسٹ مارک اپ لینگویج", "ہوم ٹول مارک اپ لینگویج", "ہائی ٹیک جدید لینگویج"] }, correct: 0 },
     { subject: 'HTML', en: "HTML kis liye use hoti hai?", ur: "HTML کس لیے استعمال ہوتی ہے؟", opts: { en: ["Web Pages Banana", "Games Install Karna", "Database Manage Karna"], ur: ["ویب پیجز بنانا", "گیمز انسٹال کرنا", "ڈیٹا بیس مینیج کرنا"] }, correct: 0 },
-    { subject: 'HTML', en: "Image tag konsa hai?", ur: "امیج ٹیگ کونسا ہے؟", opts: { en: ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;"], ur: ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;"] }, correct: 0 },
-    { subject: 'HTML', en: "Line break tag konsa hai?", ur: "لائن بریک ٹیگ کونسا؟", opts: { en: ["&lt;br&gt;", "&lt;hr&gt;", "&lt;lb&gt;"], ur: ["&lt;br&gt;", "&lt;hr&gt;", "&lt;lb&gt;"] }, correct: 0 },
-    { subject: 'HTML', en: "HTML document ka root tag?", ur: "HTML دستاویز کا روٹ ٹیگ؟", opts: { en: ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;"], ur: ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;"] }, correct: 0 },
+    { subject: 'HTML', en: "Image tag konsa hai?", ur: "امیج ٹیگ کونسا ہے؟", opts: { en: ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;"], ur: ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;"] }, correct: 2 },
+    { subject: 'HTML', en: "Line break tag konsa hai?", ur: "لائن بریک ٹیگ کونسا؟", opts: { en: ["&lt;hr&gt;", "&lt;br&gt;", "&lt;lb&gt;"], ur: ["&lt;hr&gt;", "&lt;br&gt;", "&lt;lb&gt;"] }, correct: 1 },
+    { subject: 'HTML', en: "HTML document ka root tag?", ur: "HTML دستاویز کا روٹ ٹیگ؟", opts: { en: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;"], ur: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;"] }, correct: 2 },
     { subject: 'HTML', en: "Heading tag for largest heading?", ur: "سب سے بڑے ہیڈنگ کا ٹیگ؟", opts: { en: ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;h3&gt;"], ur: ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;h3&gt;"] }, correct: 1 },
-    { subject: 'HTML', en: "Paragraph tag?", ur: "پیراگراف ٹیگ؟", opts: { en: ["&lt;para&gt;", "&lt;p&gt;", "&lt;pg&gt;"], ur: ["&lt;para&gt;", "&lt;p&gt;", "&lt;pg&gt;"] }, correct: 1 },
-    { subject: 'HTML', en: "Which tag creates a hyperlink?", ur: "ہائپر لنک کونسا ٹیگ بناتا ہے؟", opts: { en: ["&lt;link&gt;", "&lt;a&gt;", "&lt;href&gt;"], ur: ["&lt;link&gt;", "&lt;a&gt;", "&lt;href&gt;"] }, correct: 1 },
-    { subject: 'HTML', en: "Attribute for image source?", ur: "امیج سورس کی صفت؟", opts: { en: ["href", "src", "alt"], ur: ["href", "src", "alt"] }, correct: 1 },
-    { subject: 'HTML', en: "Which tag is used for div?", ur: "ڈیو کے لیے کونسا ٹیگ؟", opts: { en: ["&lt;section&gt;", "&lt;div&gt;", "&lt;box&gt;"], ur: ["&lt;section&gt;", "&lt;div&gt;", "&lt;box&gt;"] }, correct: 1 },
+    { subject: 'HTML', en: "Paragraph tag?", ur: "پیراگراف ٹیگ؟", opts: { en: ["&lt;para&gt;", "&lt;pg&gt;", "&lt;p&gt;"], ur: ["&lt;para&gt;", "&lt;pg&gt;", "&lt;p&gt;"] }, correct: 2 },
+    { subject: 'HTML', en: "Which tag creates a hyperlink?", ur: "ہائپر لنک کونسا ٹیگ بناتا ہے؟", opts: { en: ["&lt;link&gt;", "&lt;href&gt;", "&lt;a&gt;"], ur: ["&lt;link&gt;", "&lt;href&gt;", "&lt;a&gt;"] }, correct: 2 },
+    { subject: 'HTML', en: "Attribute for image source?", ur: "امیج سورس کی صفت؟", opts: { en: ["href", "alt", "src"], ur: ["href", "alt", "src"] }, correct: 2 },
+    { subject: 'HTML', en: "Which tag is used for div?", ur: "ڈیو کے لیے کونسا ٹیگ؟", opts: { en: ["&lt;section&gt;", "&lt;box&gt;", "&lt;div&gt;"], ur: ["&lt;section&gt;", "&lt;box&gt;", "&lt;div&gt;"] }, correct: 2 },
     
-    // ===== CSS (10-14) =====
-    { subject: 'CSS', en: "CSS ka Full Form?", ur: "CSS کا مکمل نام؟", opts: { en: ["Cascading Style Sheets", "Creative Style Sheets", "Computer Style System"], ur: ["کیسکیڈنگ اسٹائل شیٹس", "کریٹیو اسٹائل شیٹس", "کمپیوٹر اسٹائل سسٹم"] }, correct: 0 },
-    { subject: 'CSS', en: "CSS kis liye use hoti hai?", ur: "CSS کس لیے استعمال ہوتی ہے؟", opts: { en: ["Styling Web Pages", "Database Management", "Server Side Scripting"], ur: ["ویب پیجز کو اسٹائل کرنا", "ڈیٹا بیس مینیجمنٹ", "سرور سائیڈ سکرپٹنگ"] }, correct: 0 },
-    { subject: 'CSS', en: "CSS ko HTML mein kaise link karte hain?", ur: "CSS کو HTML میں کیسے لنک کرتے ہیں؟", opts: { en: ["&lt;style&gt; tag", "&lt;link&gt; tag", "&lt;css&gt; tag"], ur: ["&lt;style&gt; ٹیگ", "&lt;link&gt; ٹیگ", "&lt;css&gt; ٹیگ"] }, correct: 1 },
-    { subject: 'CSS', en: "Which property is used to change text color in CSS?", ur: "CSS میں ٹیکسٹ کا رنگ تبدیل کرنے کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["color", "text-color", "font-color"], ur: ["color", "text-color", "font-color"] }, correct: 0 },
-    { subject: 'CSS', en: "Which property is used for background color in CSS?", ur: "CSS میں بیک گراؤنڈ کلر کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["background-color", "bg-color", "color-background"], ur: ["background-color", "bg-color", "color-background"] }, correct: 0 },
+    // ===== CSS (10-19) =====
+    { subject: 'CSS', en: "CSS ka Full Form?", ur: "CSS کا مکمل نام؟", opts: { en: ["Creative Style Sheets", "Computer Style System", "Cascading Style Sheets"], ur: ["کریٹیو اسٹائل شیٹس", "کمپیوٹر اسٹائل سسٹم", "کیسکیڈنگ اسٹائل شیٹس"] }, correct: 2 },
+    { subject: 'CSS', en: "CSS kis liye use hoti hai?", ur: "CSS کس لیے استعمال ہوتی ہے؟", opts: { en: ["Database Management", "Server Side Scripting", "Styling Web Pages"], ur: ["ڈیٹا بیس مینیجمنٹ", "سرور سائیڈ سکرپٹنگ", "ویب پیجز کو اسٹائل کرنا"] }, correct: 2 },
+    { subject: 'CSS', en: "Inline CSS ko kaise lagayein?", ur: "Inline CSS کیسے لگائیں؟", opts: { en: ["&lt;style&gt; tag se", "External file se", "style attribute se"], ur: ["&lt;style&gt; ٹیگ سے", "ایکسترنل فائل سے", "سٹائل ایٹریبیوٹ سے"] }, correct: 2 },
+    { subject: 'CSS', en: "Internal CSS ko kaise lagayein?", ur: "Internal CSS کیسے لگائیں؟", opts: { en: ["style attribute se", "External file se", "&lt;style&gt; tag se"], ur: ["سٹائل ایٹریبیوٹ سے", "ایکسترنل فائل سے", "&lt;style&gt; ٹیگ سے"] }, correct: 2 },
+    { subject: 'CSS', en: "External CSS ko kaise link karein?", ur: "External CSS کو کیسے لنک کریں؟", opts: { en: ["&lt;style&gt; tag se", "style attribute se", "&lt;link&gt; tag se"], ur: ["&lt;style&gt; ٹیگ سے", "سٹائل ایٹریبیوٹ سے", "&lt;link&gt; ٹیگ سے"] }, correct: 2 },
+    { subject: 'CSS', en: "Which property is used to change text color in CSS?", ur: "CSS میں ٹیکسٹ کا رنگ تبدیل کرنے کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["text-color", "font-color", "color"], ur: ["text-color", "font-color", "color"] }, correct: 2 },
+    { subject: 'CSS', en: "Which property is used for background color in CSS?", ur: "CSS میں بیک گراؤنڈ کلر کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["bg-color", "color-background", "background-color"], ur: ["bg-color", "color-background", "background-color"] }, correct: 2 },
+    { subject: 'CSS', en: "Which property is used for font size in CSS?", ur: "CSS میں فونٹ سائز کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["text-size", "font-size", "size"], ur: ["text-size", "font-size", "size"] }, correct: 1 },
+    { subject: 'CSS', en: "Which property is used for margin in CSS?", ur: "CSS میں مارجن کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["padding", "border", "margin"], ur: ["padding", "border", "margin"] }, correct: 2 },
+    { subject: 'CSS', en: "Which property is used for padding in CSS?", ur: "CSS میں پیڈنگ کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["margin", "border", "padding"], ur: ["margin", "border", "padding"] }, correct: 2 },
     
-    // ===== C Programming (15-24) =====
-    { subject: 'C', en: "C language kisne banai?", ur: "C زبان کس نے بنائی؟", opts: { en: ["Dennis Ritchie", "Bjarne Stroustrup", "James Gosling"], ur: ["ڈینس ریچی", "بیجرن سٹراسٹرپ", "جیمز گوسلنگ"] }, correct: 0 },
-    { subject: 'C', en: "Which header file is used for printf()?", ur: "printf() کے لیے کونسی ہیڈر فائل استعمال ہوتی ہے؟", opts: { en: ["stdio.h", "stdlib.h", "string.h"], ur: ["stdio.h", "stdlib.h", "string.h"] }, correct: 0 },
+    // ===== C Programming (20-32) =====
+    { subject: 'C', en: "C language kisne banai?", ur: "C زبان کس نے بنائی؟", opts: { en: ["Bjarne Stroustrup", "James Gosling", "Dennis Ritchie"], ur: ["بیجرن سٹراسٹرپ", "جیمز گوسلنگ", "ڈینس ریچی"] }, correct: 2 },
+    { subject: 'C', en: "Which header file is used for printf()?", ur: "printf() کے لیے کونسی ہیڈر فائل استعمال ہوتی ہے؟", opts: { en: ["stdlib.h", "string.h", "stdio.h"], ur: ["stdlib.h", "string.h", "stdio.h"] }, correct: 2 },
     { subject: 'C', en: "Which of these is NOT a valid data type in C?", ur: "C میں کونسا ڈیٹا ٹائپ درست نہیں ہے؟", opts: { en: ["int", "float", "string"], ur: ["int", "float", "string"] }, correct: 2 },
-    { subject: 'C', en: "Which operator is used for address of a variable in C?", ur: "C میں متغیر کا ایڈریس حاصل کرنے کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["*", "&", "#"], ur: ["*", "&", "#"] }, correct: 1 },
-    { subject: 'C', en: "Which loop runs at least once in C?", ur: "C میں کونسا لوپ کم از کم ایک بار ضرور چلتا ہے؟", opts: { en: ["do-while", "while", "for"], ur: ["do-while", "while", "for"] }, correct: 0 },
-    { subject: 'C', en: "Which operator is used for logical AND in C?", ur: "C میں لاجیکل AND کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["&&", "||", "&"], ur: ["&&", "||", "&"] }, correct: 0 },
-    { subject: 'C', en: "What is the size of int in 32-bit C compiler?", ur: "32-bit C کمپائلر میں int کا سائز کیا ہے؟", opts: { en: ["4 bytes", "2 bytes", "8 bytes"], ur: ["4 بائٹس", "2 بائٹس", "8 بائٹس"] }, correct: 0 },
+    { subject: 'C', en: "Which operator is used for address of a variable in C?", ur: "C میں متغیر کا ایڈریس حاصل کرنے کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["*", "#", "&"], ur: ["*", "#", "&"] }, correct: 2 },
+    { subject: 'C', en: "Which loop runs at least once in C?", ur: "C میں کونسا لوپ کم از کم ایک بار ضرور چلتا ہے؟", opts: { en: ["while", "for", "do-while"], ur: ["while", "for", "do-while"] }, correct: 2 },
+    { subject: 'C', en: "Which operator is used for logical AND in C?", ur: "C میں لاجیکل AND کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["||", "&", "&&"], ur: ["||", "&", "&&"] }, correct: 2 },
+    { subject: 'C', en: "What is the size of int in 32-bit C compiler?", ur: "32-bit C کمپائلر میں int کا سائز کیا ہے؟", opts: { en: ["2 bytes", "8 bytes", "4 bytes"], ur: ["2 بائٹس", "8 بائٹس", "4 بائٹس"] }, correct: 2 },
+    { subject: 'C', en: "Which format specifier is used for integer in C?", ur: "C میں integer کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%f", "%c", "%d"], ur: ["%f", "%c", "%d"] }, correct: 2 },
+    { subject: 'C', en: "Which format specifier is used for float in C?", ur: "C میں float کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%d", "%c", "%f"], ur: ["%d", "%c", "%f"] }, correct: 2 },
+    { subject: 'C', en: "Which format specifier is used for character in C?", ur: "C میں character کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%d", "%f", "%c"], ur: ["%d", "%f", "%c"] }, correct: 2 },
+    { subject: 'C', en: "Which function is used to take input in C?", ur: "C میں انپٹ لینے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["printf()", "gets()", "scanf()"], ur: ["printf()", "gets()", "scanf()"] }, correct: 2 },
+    { subject: 'C', en: "Which function is used to allocate memory in C?", ur: "C میں میموری الوکیٹ کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["alloc()", "new()", "malloc()"], ur: ["alloc()", "new()", "malloc()"] }, correct: 2 },
+    { subject: 'C', en: "Which file extension is used for C source files?", ur: "C سورس فائلز کے لیے کونسا ایکسٹینشن استعمال ہوتا ہے؟", opts: { en: [".cpp", ".java", ".c"], ur: [".cpp", ".java", ".c"] }, correct: 2 },
     
-    // ===== MS Office (Word, PowerPoint, Excel) (25-49) =====
-    { subject: 'Office', en: "MS Word kis liye use hota hai?", ur: "MS Word کس لیے استعمال ہوتا ہے؟", opts: { en: ["Document Writing", "Spreadsheets", "Presentations"], ur: ["دستاویز لکھنا", "اسپریڈ شیٹس", "پریزنٹیشنز"] }, correct: 0 },
-    { subject: 'Office', en: "MS Excel kis liye use hota hai?", ur: "MS Excel کس لیے استعمال ہوتا ہے؟", opts: { en: ["Data Analysis", "Document Writing", "Presentations"], ur: ["ڈیٹا تجزیہ", "دستاویز لکھنا", "پریزنٹیشنز"] }, correct: 0 },
-    { subject: 'Office', en: "MS PowerPoint kis liye use hota hai?", ur: "MS PowerPoint کس لیے استعمال ہوتا ہے؟", opts: { en: ["Presentations", "Data Analysis", "Document Writing"], ur: ["پریزنٹیشنز", "ڈیٹا تجزیہ", "دستاویز لکھنا"] }, correct: 0 },
-    { subject: 'Office', en: "Word file ka extension kya hai?", ur: "ورڈ فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".docx", ".xlsx", ".pptx"], ur: [".docx", ".xlsx", ".pptx"] }, correct: 0 },
-    { subject: 'Office', en: "Excel file ka extension kya hai?", ur: "ایکسل فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".xlsx", ".docx", ".pptx"], ur: [".xlsx", ".docx", ".pptx"] }, correct: 0 },
-    { subject: 'Office', en: "PowerPoint file ka extension kya hai?", ur: "پاورپوائنٹ فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".pptx", ".docx", ".xlsx"], ur: [".pptx", ".docx", ".xlsx"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to save a file in MS Office?", ur: "MS Office میں فائل سیو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+S", "Ctrl+Save", "Ctrl+F"], ur: ["Ctrl+S", "Ctrl+Save", "Ctrl+F"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to copy text?", ur: "ٹیکسٹ کاپی کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+C", "Ctrl+V", "Ctrl+X"], ur: ["Ctrl+C", "Ctrl+V", "Ctrl+X"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to paste text?", ur: "ٹیکسٹ پیسٹ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+V", "Ctrl+C", "Ctrl+X"], ur: ["Ctrl+V", "Ctrl+C", "Ctrl+X"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to cut text?", ur: "ٹیکسٹ کٹ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+X", "Ctrl+C", "Ctrl+V"], ur: ["Ctrl+X", "Ctrl+C", "Ctrl+V"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to undo in MS Office?", ur: "MS Office میں انڈو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Z", "Ctrl+Y", "Ctrl+U"], ur: ["Ctrl+Z", "Ctrl+Y", "Ctrl+U"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to redo in MS Office?", ur: "MS Office میں ریڈو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Y", "Ctrl+Z", "Ctrl+R"], ur: ["Ctrl+Y", "Ctrl+Z", "Ctrl+R"] }, correct: 0 },
-    { subject: 'Office', en: "Which function is used to add numbers in Excel?", ur: "ایکسل میں نمبرز جمع کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["SUM", "ADD", "TOTAL"], ur: ["SUM", "ADD", "TOTAL"] }, correct: 0 },
-    { subject: 'Office', en: "Which function is used to find average in Excel?", ur: "ایکسل میں اوسط نکالنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["AVERAGE", "MEAN", "AVG"], ur: ["AVERAGE", "MEAN", "AVG"] }, correct: 0 },
-    { subject: 'Office', en: "Which function is used to count cells in Excel?", ur: "ایکسل میں سیلز گننے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["COUNT", "COUNTA", "COUNTIF"], ur: ["COUNT", "COUNTA", "COUNTIF"] }, correct: 0 },
-    { subject: 'Office', en: "Which function finds the maximum value in Excel?", ur: "ایکسل میں زیادہ سے زیادہ ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MAX", "MIN", "LARGE"], ur: ["MAX", "MIN", "LARGE"] }, correct: 0 },
-    { subject: 'Office', en: "Which function finds the minimum value in Excel?", ur: "ایکسل میں کم سے کم ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MIN", "MAX", "SMALL"], ur: ["MIN", "MAX", "SMALL"] }, correct: 0 },
-    { subject: 'Office', en: "What is the default file extension for Word 2016?", ur: "Word 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".docx", ".doc", ".dotx"], ur: [".docx", ".doc", ".dotx"] }, correct: 0 },
-    { subject: 'Office', en: "What is the default file extension for Excel 2016?", ur: "Excel 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".xlsx", ".xls", ".xltx"], ur: [".xlsx", ".xls", ".xltx"] }, correct: 0 },
-    { subject: 'Office', en: "What is the default file extension for PowerPoint 2016?", ur: "PowerPoint 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".pptx", ".ppt", ".potx"], ur: [".pptx", ".ppt", ".potx"] }, correct: 0 },
-    { subject: 'Office', en: "Which view is used to edit slides in PowerPoint?", ur: "PowerPoint میں سلائیڈز ایڈٹ کرنے کے لیے کونسا ویو استعمال ہوتا ہے؟", opts: { en: ["Normal View", "Slide Sorter", "Reading View"], ur: ["نارمل ویو", "سلائیڈ سورٹر", "ریڈنگ ویو"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to bold text in MS Office?", ur: "MS Office میں ٹیکسٹ بولڈ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+B", "Ctrl+1", "Ctrl+Shift+B"], ur: ["Ctrl+B", "Ctrl+1", "Ctrl+Shift+B"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to italicize text in MS Office?", ur: "MS Office میں ٹیکسٹ اٹالک کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+I", "Ctrl+2", "Ctrl+Shift+I"], ur: ["Ctrl+I", "Ctrl+2", "Ctrl+Shift+I"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to underline text in MS Office?", ur: "MS Office میں ٹیکسٹ انڈر لائن کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+U", "Ctrl+3", "Ctrl+Shift+U"], ur: ["Ctrl+U", "Ctrl+3", "Ctrl+Shift+U"] }, correct: 0 },
-    { subject: 'Office', en: "Which shortcut is used to center align text in MS Office?", ur: "MS Office میں ٹیکسٹ سینٹر الائن کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+E", "Ctrl+C", "Ctrl+Shift+C"], ur: ["Ctrl+E", "Ctrl+C", "Ctrl+Shift+C"] }, correct: 0 }
+    // ===== MS Office (Word, PowerPoint, Excel) (33-54) =====
+    { subject: 'Office', en: "MS Word kis liye use hota hai?", ur: "MS Word کس لیے استعمال ہوتا ہے؟", opts: { en: ["Spreadsheets", "Presentations", "Document Writing"], ur: ["اسپریڈ شیٹس", "پریزنٹیشنز", "دستاویز لکھنا"] }, correct: 2 },
+    { subject: 'Office', en: "MS Excel kis liye use hota hai?", ur: "MS Excel کس لیے استعمال ہوتا ہے؟", opts: { en: ["Document Writing", "Presentations", "Data Analysis"], ur: ["دستاویز لکھنا", "پریزنٹیشنز", "ڈیٹا تجزیہ"] }, correct: 2 },
+    { subject: 'Office', en: "MS PowerPoint kis liye use hota hai?", ur: "MS PowerPoint کس لیے استعمال ہوتا ہے؟", opts: { en: ["Data Analysis", "Document Writing", "Presentations"], ur: ["ڈیٹا تجزیہ", "دستاویز لکھنا", "پریزنٹیشنز"] }, correct: 2 },
+    { subject: 'Office', en: "Word file ka extension kya hai?", ur: "ورڈ فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".xlsx", ".pptx", ".docx"], ur: [".xlsx", ".pptx", ".docx"] }, correct: 2 },
+    { subject: 'Office', en: "Excel file ka extension kya hai?", ur: "ایکسل فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".docx", ".pptx", ".xlsx"], ur: [".docx", ".pptx", ".xlsx"] }, correct: 2 },
+    { subject: 'Office', en: "PowerPoint file ka extension kya hai?", ur: "پاورپوائنٹ فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".docx", ".xlsx", ".pptx"], ur: [".docx", ".xlsx", ".pptx"] }, correct: 2 },
+    { subject: 'Office', en: "Which shortcut is used to save a file in MS Office?", ur: "MS Office میں فائل سیو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Save", "Ctrl+F", "Ctrl+S"], ur: ["Ctrl+Save", "Ctrl+F", "Ctrl+S"] }, correct: 2 },
+    { subject: 'Office', en: "Which shortcut is used to copy text?", ur: "ٹیکسٹ کاپی کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+V", "Ctrl+X", "Ctrl+C"], ur: ["Ctrl+V", "Ctrl+X", "Ctrl+C"] }, correct: 2 },
+    { subject: 'Office', en: "Which shortcut is used to paste text?", ur: "ٹیکسٹ پیسٹ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+C", "Ctrl+X", "Ctrl+V"], ur: ["Ctrl+C", "Ctrl+X", "Ctrl+V"] }, correct: 2 },
+    { subject: 'Office', en: "Which shortcut is used to cut text?", ur: "ٹیکسٹ کٹ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+C", "Ctrl+V", "Ctrl+X"], ur: ["Ctrl+C", "Ctrl+V", "Ctrl+X"] }, correct: 2 },
+    { subject: 'Office', en: "Which shortcut is used to undo in MS Office?", ur: "MS Office میں انڈو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Y", "Ctrl+U", "Ctrl+Z"], ur: ["Ctrl+Y", "Ctrl+U", "Ctrl+Z"] }, correct: 2 },
+    { subject: 'Office', en: "Which shortcut is used to redo in MS Office?", ur: "MS Office میں ریڈو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Z", "Ctrl+R", "Ctrl+Y"], ur: ["Ctrl+Z", "Ctrl+R", "Ctrl+Y"] }, correct: 2 },
+    { subject: 'Office', en: "Which function is used to add numbers in Excel?", ur: "ایکسل میں نمبرز جمع کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["ADD", "TOTAL", "SUM"], ur: ["ADD", "TOTAL", "SUM"] }, correct: 2 },
+    { subject: 'Office', en: "Which function is used to find average in Excel?", ur: "ایکسل میں اوسط نکالنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MEAN", "AVG", "AVERAGE"], ur: ["MEAN", "AVG", "AVERAGE"] }, correct: 2 },
+    { subject: 'Office', en: "Which function is used to count cells in Excel?", ur: "ایکسل میں سیلز گننے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["COUNTA", "COUNTIF", "COUNT"], ur: ["COUNTA", "COUNTIF", "COUNT"] }, correct: 2 },
+    { subject: 'Office', en: "Which function finds the maximum value in Excel?", ur: "ایکسل میں زیادہ سے زیادہ ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MIN", "LARGE", "MAX"], ur: ["MIN", "LARGE", "MAX"] }, correct: 2 },
+    { subject: 'Office', en: "Which function finds the minimum value in Excel?", ur: "ایکسل میں کم سے کم ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MAX", "SMALL", "MIN"], ur: ["MAX", "SMALL", "MIN"] }, correct: 2 },
+    { subject: 'Office', en: "What is the default file extension for Word 2016?", ur: "Word 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".doc", ".dotx", ".docx"], ur: [".doc", ".dotx", ".docx"] }, correct: 2 },
+    { subject: 'Office', en: "What is the default file extension for Excel 2016?", ur: "Excel 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".xls", ".xltx", ".xlsx"], ur: [".xls", ".xltx", ".xlsx"] }, correct: 2 },
+    { subject: 'Office', en: "What is the default file extension for PowerPoint 2016?", ur: "PowerPoint 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".ppt", ".potx", ".pptx"], ur: [".ppt", ".potx", ".pptx"] }, correct: 2 },
+    { subject: 'Office', en: "Which view is used to edit slides in PowerPoint?", ur: "PowerPoint میں سلائیڈز ایڈٹ کرنے کے لیے کونسا ویو استعمال ہوتا ہے؟", opts: { en: ["Slide Sorter", "Reading View", "Normal View"], ur: ["سلائیڈ سورٹر", "ریڈنگ ویو", "نارمل ویو"] }, correct: 2 },
+    { subject: 'Office', en: "Which shortcut is used to bold text in MS Office?", ur: "MS Office میں ٹیکسٹ بولڈ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+1", "Ctrl+Shift+B", "Ctrl+B"], ur: ["Ctrl+1", "Ctrl+Shift+B", "Ctrl+B"] }, correct: 2 }
   ];
 
   let currentLang = 'en';
   let total = 0;
+  let isQuizSubmitted = false;
+  let userAnswers = {};
+  let currentFilter = 'all';
+  let currentQuestionIndex = 0;
   const container = document.getElementById('questionsContainer');
+  const allQuestions = [];
 
-  function getBadge(subject) {
-    const map = {
-      'HTML': 'badge-html',
-      'CSS': 'badge-css',
-      'C': 'badge-c',
-      'Office': 'badge-office'
-    };
-    return map[subject] || 'badge-html';
+  // ===== PROGRESS BAR =====
+  function updateProgress() {
+    const totalQ = questions.length;
+    let answered = 0;
+    for (let i = 0; i < totalQ; i++) {
+      if (userAnswers[i] !== undefined) answered++;
+    }
+    const percentage = (answered / totalQ) * 100;
+    document.getElementById('progressFill').style.width = percentage + '%';
+    document.getElementById('progressText').textContent = `${answered} / ${totalQ} answered`;
   }
 
-  function getSubjectLabel(subject) {
-    const map = {
-      'HTML': 'HTML',
-      'CSS': 'CSS',
-      'C': 'C Prog.',
-      'Office': 'MS Office'
-    };
-    return map[subject] || subject;
+  // ===== FILTER QUESTIONS =====
+  function filterQuestions(subject, btn) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = subject;
+    
+    let visibleQuestions = [];
+    document.querySelectorAll('.question').forEach((q, idx) => {
+      if (subject === 'all') {
+        q.classList.remove('hidden');
+        visibleQuestions.push(idx);
+      } else {
+        if (q.dataset.subject === subject) {
+          q.classList.remove('hidden');
+          visibleQuestions.push(idx);
+        } else {
+          q.classList.add('hidden');
+        }
+      }
+    });
+    
+    // Update navigation info
+    const totalVisible = visibleQuestions.length;
+    const totalQ = questions.length;
+    document.getElementById('navInfo').textContent = 
+      subject === 'all' ? `Showing: All Questions (${totalQ})` : 
+      `Showing: ${subject} (${totalVisible})`;
+    
+    // Reset to first visible question
+    if (visibleQuestions.length > 0) {
+      currentQuestionIndex = visibleQuestions[0];
+      scrollToQuestion(currentQuestionIndex);
+    }
+    updateNavButtons();
   }
 
+  // ===== NAVIGATION =====
+  function getVisibleQuestions() {
+    const visible = [];
+    document.querySelectorAll('.question').forEach((q, idx) => {
+      if (!q.classList.contains('hidden')) {
+        visible.push(idx);
+      }
+    });
+    return visible;
+  }
+
+  function navigateQuestions(direction) {
+    const visible = getVisibleQuestions();
+    if (visible.length === 0) return;
+    
+    const currentIdx = visible.indexOf(currentQuestionIndex);
+    let newIdx;
+    if (direction === 'next') {
+      newIdx = (currentIdx + 1) % visible.length;
+    } else {
+      newIdx = (currentIdx - 1 + visible.length) % visible.length;
+    }
+    currentQuestionIndex = visible[newIdx];
+    scrollToQuestion(currentQuestionIndex);
+    updateNavButtons();
+  }
+
+  function scrollToQuestion(index) {
+    const questions = document.querySelectorAll('.question');
+    if (questions[index]) {
+      questions[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Highlight effect
+      questions[index].style.transition = '0.3s';
+      questions[index].style.boxShadow = '0 0 0 3px #f7971e, 0 4px 20px rgba(0,0,0,0.1)';
+      setTimeout(() => {
+        questions[index].style.boxShadow = '';
+      }, 1500);
+    }
+  }
+
+  function updateNavButtons() {
+    const visible = getVisibleQuestions();
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (visible.length <= 1) {
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      return;
+    }
+    
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
+  }
+
+  // ===== RENDER QUESTIONS =====
   function renderQuestions(lang) {
     let html = '';
     questions.forEach((q, idx) => {
@@ -825,26 +1113,25 @@
       const qText = lang === 'en' ? q.en : q.ur;
       const opts = lang === 'en' ? q.opts.en : q.opts.ur;
       const name = `q${idx}`;
-      const correctVal = q.correct;
       const badgeClass = getBadge(q.subject);
       const subjectLabel = getSubjectLabel(q.subject);
       html += `
-        <div class="question">
+        <div class="question" data-subject="${q.subject}" data-index="${idx}">
           <h3>
             ${qNum}) ${qText}
             <span class="badge ${badgeClass}">${subjectLabel}</span>
           </h3>
           <div class="options">
             <div class="option-item">
-              <input type="radio" name="${name}" value="0" id="${name}_0">
+              <input type="radio" name="${name}" value="0" id="${name}_0" onchange="onAnswerChange(${idx})">
               <label for="${name}_0">A. ${opts[0]}</label>
             </div>
             <div class="option-item">
-              <input type="radio" name="${name}" value="1" id="${name}_1">
+              <input type="radio" name="${name}" value="1" id="${name}_1" onchange="onAnswerChange(${idx})">
               <label for="${name}_1">B. ${opts[1]}</label>
             </div>
             <div class="option-item">
-              <input type="radio" name="${name}" value="2" id="${name}_2">
+              <input type="radio" name="${name}" value="2" id="${name}_2" onchange="onAnswerChange(${idx})">
               <label for="${name}_2">C. ${opts[2]}</label>
             </div>
           </div>
@@ -853,11 +1140,45 @@
       `;
     });
     container.innerHTML = html;
-    document.querySelector('.quiz-title span').innerHTML = lang === 'en' ? '📚 Mega Quiz · 50 Questions' : '📚 میگا کوئز · ۵۰ سوالات';
+    
+    // Update language
+    document.querySelector('.quiz-title span').innerHTML = lang === 'en' ? '🏆 Noor Mustafa Mega Quiz' : '🏆 نور مصطفیٰ میگا کوئز';
     document.getElementById('name').placeholder = lang === 'en' ? 'Student Name' : 'طالب علم کا نام';
     document.getElementById('roll').placeholder = lang === 'en' ? 'Roll Number' : 'رول نمبر';
+    
+    // Reset result
     document.getElementById('result').style.display = 'none';
     document.querySelectorAll('.feedback').forEach(el => el.innerHTML = '');
+    
+    // Apply current filter
+    const activeTab = document.querySelector('.filter-tab.active');
+    if (activeTab) {
+      filterQuestions(currentFilter, activeTab);
+    }
+    
+    updateProgress();
+    updateNavButtons();
+  }
+
+  function onAnswerChange(idx) {
+    const name = `q${idx}`;
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    if (selected) {
+      userAnswers[idx] = parseInt(selected.value);
+    } else {
+      delete userAnswers[idx];
+    }
+    updateProgress();
+  }
+
+  function getBadge(subject) {
+    const map = { 'HTML': 'badge-html', 'CSS': 'badge-css', 'C': 'badge-c', 'Office': 'badge-office' };
+    return map[subject] || 'badge-html';
+  }
+
+  function getSubjectLabel(subject) {
+    const map = { 'HTML': 'HTML', 'CSS': 'CSS', 'C': 'C Prog.', 'Office': 'MS Office' };
+    return map[subject] || subject;
   }
 
   function setLanguage(lang) {
@@ -865,31 +1186,49 @@
     document.getElementById('langEn').classList.toggle('active', lang === 'en');
     document.getElementById('langUr').classList.toggle('active', lang === 'ur');
     renderQuestions(lang);
-    document.getElementById('result').style.display = 'none';
   }
 
+  function toggleDark() {
+    document.body.classList.toggle('dark-mode');
+  }
+
+  // ===== QUIZ SUBMIT =====
   function quiz() {
+    if (isQuizSubmitted) return;
+    isQuizSubmitted = true;
+    document.getElementById('submitBtn').disabled = true;
+    
     total = 0;
     const totalQ = questions.length;
+    let subjectScores = { HTML: 0, CSS: 0, C: 0, Office: 0 };
+    let subjectTotals = { HTML: 0, CSS: 0, C: 0, Office: 0 };
+    let reviewItems = [];
+
     for (let i = 0; i < totalQ; i++) {
       const name = `q${i}`;
       const selected = document.querySelector(`input[name="${name}"]:checked`);
       const feedback = document.getElementById(`r${i}`);
       const correctAns = questions[i].correct;
-      
+      const subject = questions[i].subject;
+      subjectTotals[subject]++;
+
       if (selected) {
         const val = parseInt(selected.value);
         if (val === correctAns) {
           total++;
+          subjectScores[subject]++;
           feedback.innerHTML = currentLang === 'en' ? '✅ Correct' : '✅ درست';
           feedback.style.color = '#0f6b3a';
+          reviewItems.push({ q: i, correct: true, selected: val, correctAns: correctAns, text: questions[i][currentLang] });
         } else {
           feedback.innerHTML = currentLang === 'en' ? '❌ Wrong' : '❌ غلط';
           feedback.style.color = '#b13e3e';
+          reviewItems.push({ q: i, correct: false, selected: val, correctAns: correctAns, text: questions[i][currentLang] });
         }
       } else {
-        feedback.innerHTML = currentLang === 'en' ? '⚠️ No answer' : '⚠️ کوئی جواب نہیں';
+        feedback.innerHTML = currentLang === 'en' ? '⚠️ Not answered' : '⚠️ کوئی جواب نہیں';
         feedback.style.color = '#a06d2b';
+        reviewItems.push({ q: i, correct: false, selected: null, correctAns: correctAns, text: questions[i][currentLang] });
       }
     }
 
@@ -902,7 +1241,41 @@
     const percentText = currentLang === 'en' ? 'Percentage' : 'فیصد';
     scoreEl.innerHTML = `${scoreText} : ${total}/${totalQ}`;
     percentEl.innerHTML = `${percentText} : ${percentage.toFixed(0)}%`;
+
+    // Subject-wise result
+    let subjectHtml = '';
+    const subjectNames = { HTML: 'HTML', CSS: 'CSS', C: 'C Prog.', Office: 'MS Office' };
+    for (let sub in subjectScores) {
+      subjectHtml += `<div class="subject-result-item">
+        <span class="s-name">${subjectNames[sub]}:</span>
+        <span class="s-score">${subjectScores[sub]}/${subjectTotals[sub]}</span>
+      </div>`;
+    }
+    document.getElementById('subjectResult').innerHTML = subjectHtml;
+
+    // Review section
+    let reviewHtml = '';
+    reviewItems.forEach((item, idx) => {
+      const qNum = idx + 1;
+      const opts = questions[idx].opts[currentLang];
+      const isCorrect = item.correct;
+      const icon = isCorrect ? '✅' : '❌';
+      const cls = isCorrect ? 'correct' : 'wrong';
+      const selectedText = item.selected !== null ? opts[item.selected] : 'Not answered';
+      const correctText = opts[item.correctAns];
+      reviewHtml += `
+        <div class="review-item ${cls}">
+          <span>${icon}</span>
+          <span class="q-text">Q${qNum}: ${item.text}</span>
+          <span>→ Your: ${selectedText}</span>
+          ${!isCorrect ? `<span style="color:#0f6b3a;">✔ Correct: ${correctText}</span>` : ''}
+        </div>
+      `;
+    });
+    document.getElementById('reviewList').innerHTML = reviewHtml;
+
     resultPanel.style.display = 'block';
+    resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     send();
   }
 
@@ -913,10 +1286,11 @@
     const courseText = courseSelect.options[courseSelect.selectedIndex].text || courseSelect.value;
     const totalQ = questions.length;
     const percentage = ((total / totalQ) * 100).toFixed(0);
-    const msg = `WEBCODE INSTITUTE IT & ENGLISH LANGUAGE\n\nMEGA QUIZ RESULT (HTML+CSS+C+MS Office)\n\nStudent : ${name}\nRoll No : ${roll}\nCourse : ${courseText}\nScore : ${total}/${totalQ}\nPercentage : ${percentage}%`;
+    const msg = `WEBCODE INSTITUTE IT & ENGLISH LANGUAGE\n\nNOOR MUSTAFA MEGA QUIZ RESULT\n\nStudent : ${name}\nRoll No : ${roll}\nCourse : ${courseText}\nScore : ${total}/${totalQ}\nPercentage : ${percentage}%`;
     document.getElementById('waLink').href = 'https://api.whatsapp.com/send?phone=923101391632&text=' + encodeURIComponent(msg);
   }
 
+  // Initial render
   renderQuestions('en');
 </script>
 </body>
