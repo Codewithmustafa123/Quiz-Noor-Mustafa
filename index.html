@@ -7,21 +7,318 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
+    html, body {
       font-family: 'Inter', sans-serif;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       min-height: 100vh;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 0.5rem;
       transition: background 0.3s;
+      overflow-x: hidden;
     }
     body.dark-mode {
       background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #0a0a0a);
     }
+    
+    /* ===== WELCOME SCREEN ===== */
+    .welcome-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      padding: 0.8rem;
+    }
+    .welcome-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+    }
+    .welcome-content {
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      padding: 1.8rem 1.5rem;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      animation: fadeInUp 0.8s ease;
+      max-height: 98vh;
+      overflow-y: auto;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .welcome-content .logo-icon {
+      font-size: 3.2rem;
+      margin-bottom: 0.2rem;
+      display: block;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .welcome-content h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.2rem;
+    }
+    .welcome-content .subtitle {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+      font-weight: 400;
+    }
+    .welcome-content .subtitle strong {
+      color: #ffd200;
+      -webkit-text-fill-color: #ffd200;
+    }
+    .welcome-content .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+    .welcome-content .feature-item {
+      background: rgba(255,255,255,0.06);
+      padding: 0.6rem 0.4rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.75rem;
+    }
+    .welcome-content .feature-item .icon {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 0.1rem;
+    }
+    .welcome-content .student-form {
+      background: rgba(255,255,255,0.05);
+      padding: 1rem;
+      border-radius: 18px;
+      margin: 1rem 0;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .welcome-content .student-form input,
+    .welcome-content .student-form select {
+      width: 100%;
+      padding: 11px 16px;
+      border-radius: 40px;
+      border: 2px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: 0.3s;
+      margin-bottom: 0.6rem;
+    }
+    .welcome-content .student-form input::placeholder {
+      color: rgba(255,255,255,0.5);
+    }
+    .welcome-content .student-form input:focus,
+    .welcome-content .student-form select:focus {
+      border-color: #f7971e;
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 0 4px rgba(247, 151, 30, 0.15);
+    }
+    .welcome-content .student-form select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f7971e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 14px;
+      color: white;
+      cursor: pointer;
+    }
+    .welcome-content .student-form select option {
+      background: #1a1a2e;
+      color: white;
+    }
+    .btn-start {
+      width: 100%;
+      padding: 0.85rem;
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      border: none;
+      border-radius: 50px;
+      color: #1a1a2e;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 10px 30px rgba(247, 151, 30, 0.35);
+      margin-top: 0.2rem;
+      letter-spacing: 0.5px;
+    }
+    .btn-start:hover {
+      transform: scale(1.02);
+      box-shadow: 0 14px 40px rgba(247, 151, 30, 0.5);
+    }
+    .btn-start:active {
+      transform: scale(0.97);
+    }
+    .welcome-content .footer-text {
+      margin-top: 1rem;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.7rem;
+    }
+    .welcome-content .footer-text span {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+    
+    /* ===== QUIZ CARD ===== */
+    .quiz-card {
+      max-width: 1200px;
+      width: 100%;
+      background: linear-gradient(145deg, #ffffff, #f5f8ff);
+      border-radius: 30px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+      transition: all 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .quiz-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .institute-header {
+      text-align: center;
+      margin-bottom: 0.3rem;
+      position: relative;
+    }
+    .institute-header::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #f7971e, #ffd200, #f7971e);
+      border-radius: 4px;
+    }
+    .institute-header h1 {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.3px;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .quiz-title {
+      background: linear-gradient(135deg, #1a1a2e, #2d2d44, #1a1a2e);
+      color: white;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 40px;
+      box-shadow: 0 8px 25px rgba(26, 26, 46, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      flex: 1;
+      width: 100%;
+    }
+    .quiz-title span { 
+      flex: 1; 
+      text-align: center;
+      background: linear-gradient(90deg, #f7971e, #ffd200);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 0.85rem;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .lang-toggle {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 40px;
+      padding: 2px 3px;
+      display: flex;
+      gap: 2px;
+    }
+    .lang-toggle button {
+      background: transparent;
+      border: none;
+      padding: 3px 10px;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #aabbdd;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.6rem;
+    }
+    .lang-toggle button.active {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      color: #1a1a2e;
+      box-shadow: 0 4px 15px rgba(247, 151, 30, 0.3);
+    }
+    .lang-toggle button:hover { background: rgba(255,255,255,0.1); }
+    .lang-toggle button.active:hover { background: linear-gradient(135deg, #f7971e, #ffd200); }
+    
+    .dark-toggle {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 40px;
+      padding: 2px 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.3s;
+      color: #aabbdd;
+      border: none;
+    }
+    .dark-toggle:hover { background: rgba(255,255,255,0.15); }
+
+    /* Dark mode */
     body.dark-mode .quiz-card {
       background: linear-gradient(145deg, #1a1a2e, #16213e);
       color: #e0e0e0;
@@ -75,9 +372,6 @@
     body.dark-mode .filter-tab.active {
       color: white;
     }
-    body.dark-mode .top-controls button {
-      color: #aabbdd;
-    }
     body.dark-mode .nav-btn {
       background: #2a2a4a;
       color: #d0d0e0;
@@ -86,195 +380,40 @@
     body.dark-mode .nav-btn:hover {
       background: #3a3a5a;
     }
-
-    .quiz-card {
-      max-width: 1200px;
-      width: 100%;
-      background: linear-gradient(145deg, #ffffff, #f5f8ff);
-      border-radius: 30px;
-      padding: 1.8rem 1.5rem;
-      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
-      transition: all 0.3s;
+    body.dark-mode .certificate {
+      background: linear-gradient(145deg, #1f2a2a, #2a3a3a);
+      border-color: #4a6a6a;
     }
-    @media (min-width: 768px) {
-      .quiz-card { padding: 2.8rem 3rem; border-radius: 50px; }
+    body.dark-mode .certificate .cert-title {
+      color: #f0e68c;
     }
-    @media (max-width: 480px) {
-      .quiz-card { padding: 1rem 0.8rem; border-radius: 20px; }
+    body.dark-mode .certificate .cert-name {
+      color: #ffd700;
     }
-    
-    .institute-header {
-      text-align: center;
-      margin-bottom: 0.3rem;
-      position: relative;
+    body.dark-mode .certificate .cert-footer {
+      color: #aaccdd;
     }
-    .institute-header::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, #f7971e, #ffd200, #f7971e);
-      border-radius: 4px;
+    body.dark-mode .student-info-display {
+      background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+      border-color: #3a3a5a;
+      color: #e0e0e0;
     }
-    @media (min-width: 768px) {
-      .institute-header::after { width: 100px; height: 4px; }
+    body.dark-mode .student-info-display .label {
+      color: #d0d0e0;
     }
-    .institute-header h1 {
-      font-weight: 800;
-      font-size: 1.8rem;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.3px;
+    body.dark-mode .student-info-display .value {
+      color: #8aabdd;
     }
-    @media (min-width: 768px) {
-      .institute-header h1 { font-size: 2.8rem; letter-spacing: -0.5px; }
-    }
-    @media (max-width: 480px) {
-      .institute-header h1 { font-size: 1.4rem; }
-    }
-    .institute-header .subhead {
-      font-weight: 500;
-      color: #4a6a8a;
-      font-size: 0.8rem;
-      letter-spacing: 0.3px;
-      margin-top: 4px;
-      display: inline-block;
-      background: linear-gradient(90deg, #4a6a8a, #6a8aaa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    @media (min-width: 768px) {
-      .institute-header .subhead { font-size: 1rem; letter-spacing: 0.5px; }
-    }
-
-    .top-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 0.8rem;
-    }
-    .quiz-title {
-      background: linear-gradient(135deg, #1a1a2e, #2d2d44, #1a1a2e);
-      color: white;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      padding: 0.8rem 1rem;
-      border-radius: 40px;
-      box-shadow: 0 8px 25px rgba(26, 26, 46, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      border: 1px solid rgba(255,255,255,0.08);
-      flex: 1;
-    }
-    @media (min-width: 768px) {
-      .quiz-title {
-        font-size: 1.8rem;
-        padding: 1rem 1.5rem;
-        border-radius: 60px;
-      }
-    }
-    @media (max-width: 480px) {
-      .quiz-title {
-        font-size: 0.9rem;
-        padding: 0.6rem 0.8rem;
-        border-radius: 30px;
-        flex-direction: column;
-        gap: 8px;
-      }
-    }
-    .quiz-title span { 
-      flex: 1; 
-      text-align: center;
-      background: linear-gradient(90deg, #f7971e, #ffd200);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-size: 1rem;
-    }
-    @media (min-width: 768px) {
-      .quiz-title span { font-size: 1.6rem; }
-    }
-    @media (max-width: 480px) {
-      .quiz-title span { font-size: 0.85rem; }
-    }
-
-    .top-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .lang-toggle {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 40px;
-      padding: 3px 4px;
-      display: flex;
-      gap: 3px;
-      font-size: 0.7rem;
-    }
-    @media (min-width: 768px) {
-      .lang-toggle { padding: 5px 6px; gap: 4px; font-size: 0.85rem; }
-    }
-    .lang-toggle button {
-      background: transparent;
-      border: none;
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-weight: 600;
-      color: #aabbdd;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 0.7rem;
-    }
-    @media (min-width: 768px) {
-      .lang-toggle button { padding: 6px 20px; font-size: 0.85rem; }
-    }
-    @media (max-width: 480px) {
-      .lang-toggle button { padding: 3px 8px; font-size: 0.6rem; }
-    }
-    .lang-toggle button.active {
-      background: linear-gradient(135deg, #f7971e, #ffd200);
-      color: #1a1a2e;
-      box-shadow: 0 4px 15px rgba(247, 151, 30, 0.3);
-    }
-    .lang-toggle button:hover { background: rgba(255,255,255,0.1); }
-    .lang-toggle button.active:hover { background: linear-gradient(135deg, #f7971e, #ffd200); }
-
-    .dark-toggle {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 40px;
-      padding: 3px 8px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: 0.3s;
-      color: #aabbdd;
-      border: none;
-    }
-    .dark-toggle:hover { background: rgba(255,255,255,0.15); }
-    @media (min-width: 768px) {
-      .dark-toggle { padding: 5px 12px; font-size: 1.3rem; }
+    body.dark-mode .student-info-display .separator {
+      color: #4a4a6a;
     }
 
     .progress-container {
-      margin-bottom: 1rem;
+      margin-bottom: 0.6rem;
     }
     .progress-bar {
       width: 100%;
-      height: 8px;
+      height: 6px;
       background: rgba(0,0,0,0.1);
       border-radius: 10px;
       overflow: hidden;
@@ -291,104 +430,56 @@
     }
     .progress-text {
       color: #6a7a8a;
-      font-size: 0.7rem;
-      margin-top: 4px;
+      font-size: 0.65rem;
+      margin-top: 3px;
       text-align: right;
-    }
-    @media (min-width: 768px) {
-      .progress-text { font-size: 0.8rem; }
     }
     body.dark-mode .progress-text { color: #aabbdd; }
 
-    .student-card {
+    .student-info-display {
       background: linear-gradient(135deg, #f0f4ff, #e8edf8);
-      border-radius: 20px;
-      padding: 1.2rem 1.2rem;
-      margin-bottom: 1.5rem;
+      border-radius: 16px;
+      padding: 0.7rem 1.2rem;
+      margin-bottom: 0.8rem;
       border: 1px solid rgba(255,255,255,0.5);
       box-shadow: inset 0 2px 10px rgba(255,255,255,0.6), 0 8px 20px rgba(0,0,0,0.05);
-    }
-    @media (min-width: 768px) {
-      .student-card { padding: 1.8rem 2rem; border-radius: 30px; margin-bottom: 2.2rem; }
-    }
-    .student-card h3 {
-      font-weight: 700;
-      color: #1a1a2e;
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 1rem;
-    }
-    @media (min-width: 768px) {
-      .student-card h3 { margin-bottom: 1.2rem; font-size: 1.25rem; gap: 10px; }
-    }
-    .student-card h3::before { content: '👤'; font-size: 1.2rem; }
-    @media (min-width: 768px) {
-      .student-card h3::before { font-size: 1.5rem; }
-    }
-    .input-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      align-items: center;
+      gap: 8px 16px;
     }
-    @media (min-width: 768px) {
-      .input-group { gap: 14px; }
+    .student-info-display .label {
+      font-weight: 600;
+      color: #1a1a2e;
+      font-size: 0.75rem;
     }
-    .input-group input, .input-group select {
-      flex: 1 1 100%;
-      padding: 12px 16px;
-      border-radius: 40px;
-      border: 2px solid #dce4f0;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      background: white;
-      outline: none;
-      transition: 0.3s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-      min-width: 0;
+    .student-info-display .value {
+      font-weight: 500;
+      color: #4a6a8a;
+      font-size: 0.8rem;
     }
-    @media (min-width: 480px) {
-      .input-group input, .input-group select {
-        flex: 1 1 160px;
-        padding: 15px 22px;
-        font-size: 0.95rem;
-      }
+    .student-info-display .separator {
+      color: #c8d4e8;
+      font-size: 0.7rem;
     }
-    @media (min-width: 768px) {
-      .input-group input, .input-group select {
-        flex: 1 1 170px;
-        padding: 15px 22px;
-      }
-    }
-    .input-group input:focus, .input-group select:focus {
-      border-color: #f7971e;
-      box-shadow: 0 0 0 4px rgba(247, 151, 30, 0.12), 0 2px 10px rgba(0,0,0,0.05);
-    }
-    .input-group select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f7971e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      background-size: 14px;
-    }
-    @media (min-width: 768px) {
-      .input-group select { background-position: right 18px center; background-size: 16px; }
+
+    .student-card {
+      display: none;
     }
 
     .filter-tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 1.2rem;
+      gap: 6px;
+      margin-bottom: 0.8rem;
     }
     .filter-tab {
-      padding: 6px 18px;
+      padding: 4px 14px;
       border-radius: 30px;
       border: 2px solid #dce4f0;
       background: transparent;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       cursor: pointer;
       transition: 0.3s;
       color: #1a1a2e;
@@ -410,64 +501,36 @@
 
     .question {
       background: linear-gradient(145deg, #ffffff, #f8faff);
-      border-radius: 18px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 1rem;
-      border-left: 6px solid #f7971e;
+      border-radius: 16px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.8rem;
+      border-left: 5px solid #f7971e;
       border: 1px solid #e8edf8;
-      border-left-width: 6px;
+      border-left-width: 5px;
       transition: 0.2s;
       box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
     .question.hidden { display: none; }
-    @media (min-width: 768px) {
-      .question {
-        padding: 1.4rem 2rem;
-        border-radius: 24px;
-        margin-bottom: 1.2rem;
-        border-left-width: 8px;
-      }
-    }
-    @media (max-width: 480px) {
-      .question {
-        padding: 0.8rem 0.9rem;
-        border-left-width: 4px;
-        margin-bottom: 0.8rem;
-        border-radius: 14px;
-      }
-    }
     .question:hover {
       box-shadow: 0 4px 20px rgba(0,0,0,0.06);
       transform: translateY(-1px);
     }
     .question h3 {
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: #1a1a2e;
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       flex-wrap: wrap;
     }
-    @media (min-width: 768px) {
-      .question h3 { font-size: 1.05rem; margin-bottom: 0.9rem; gap: 8px; }
-    }
-    @media (max-width: 480px) {
-      .question h3 { font-size: 0.8rem; margin-bottom: 0.5rem; gap: 4px; }
-    }
     .question h3 .badge {
-      font-size: 0.55rem;
-      padding: 2px 10px;
+      font-size: 0.5rem;
+      padding: 2px 8px;
       border-radius: 30px;
       font-weight: 700;
       letter-spacing: 0.2px;
-    }
-    @media (min-width: 768px) {
-      .question h3 .badge { font-size: 0.65rem; padding: 2px 14px; letter-spacing: 0.3px; margin-left: 6px; }
-    }
-    @media (max-width: 480px) {
-      .question h3 .badge { font-size: 0.5rem; padding: 1px 8px; }
     }
     .badge-html { background: linear-gradient(135deg, #e44d26, #f16529); color: white; }
     .badge-css { background: linear-gradient(135deg, #2965f1, #1e4f8a); color: white; }
@@ -477,96 +540,65 @@
     .options {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
       padding-left: 2px;
-    }
-    @media (min-width: 768px) {
-      .options { gap: 8px; padding-left: 4px; }
     }
     .option-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: #ffffff;
-      padding: 7px 14px 7px 12px;
-      border-radius: 40px;
+      padding: 5px 10px 5px 8px;
+      border-radius: 30px;
       border: 2px solid #e8edf8;
       transition: 0.2s ease;
       cursor: pointer;
-    }
-    @media (min-width: 768px) {
-      .option-item { gap: 14px; padding: 9px 20px 9px 16px; border-radius: 60px; }
-    }
-    @media (max-width: 480px) {
-      .option-item { padding: 5px 10px 5px 8px; gap: 8px; border-radius: 30px; border-width: 1.5px; }
     }
     .option-item:hover {
       background: linear-gradient(135deg, #faf5ff, #f0f4ff);
       border-color: #c8d4e8;
       transform: translateX(2px);
     }
-    @media (min-width: 768px) {
-      .option-item:hover { transform: translateX(4px); }
-    }
     .option-item input[type="radio"] {
-      width: 15px;
-      height: 15px;
+      width: 14px;
+      height: 14px;
       accent-color: #f7971e;
       flex-shrink: 0;
       cursor: pointer;
     }
-    @media (min-width: 768px) {
-      .option-item input[type="radio"] { width: 17px; height: 17px; }
-    }
-    @media (max-width: 480px) {
-      .option-item input[type="radio"] { width: 13px; height: 13px; }
-    }
     .option-item input[type="radio"]:checked { accent-color: #f7971e; }
     .option-item label {
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       font-weight: 450;
       color: #1d3148;
       cursor: pointer;
       flex: 1;
       padding-top: 1px;
     }
-    @media (min-width: 768px) {
-      .option-item label { font-size: 0.95rem; padding-top: 2px; }
-    }
-    @media (max-width: 480px) {
-      .option-item label { font-size: 0.72rem; padding-top: 1px; }
-    }
 
     .feedback {
-      margin-top: 10px;
+      margin-top: 6px;
       font-weight: 600;
-      font-size: 0.8rem;
-      padding: 3px 0 0 6px;
+      font-size: 0.7rem;
+      padding: 2px 0 0 4px;
       border-radius: 30px;
     }
-    @media (min-width: 768px) {
-      .feedback { margin-top: 12px; font-size: 0.9rem; padding: 4px 0 0 8px; }
-    }
-    @media (max-width: 480px) {
-      .feedback { margin-top: 6px; font-size: 0.7rem; padding: 2px 0 0 4px; }
-    }
 
-    /* Navigation Buttons */
     .nav-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      margin: 0.8rem 0 0.5rem 0;
+      gap: 8px;
+      margin: 0.6rem 0 0.4rem 0;
       flex-wrap: wrap;
     }
     .nav-btn {
-      padding: 8px 20px;
+      padding: 6px 16px;
       border-radius: 40px;
       border: 2px solid #dce4f0;
       background: white;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       cursor: pointer;
       transition: 0.3s;
       color: #1a1a2e;
@@ -602,47 +634,26 @@
       border-color: #4a4a6a;
     }
     .nav-info {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: #6a7a8a;
       font-weight: 500;
     }
     body.dark-mode .nav-info { color: #aabbdd; }
-    @media (max-width: 480px) {
-      .nav-btn { padding: 6px 14px; font-size: 0.75rem; }
-      .nav-info { font-size: 0.75rem; }
-    }
 
     .btn-submit {
       width: 100%;
-      padding: 0.9rem;
+      padding: 0.7rem;
       background: linear-gradient(135deg, #f7971e, #ffd200);
       border: none;
       border-radius: 50px;
       color: #1a1a2e;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: 0.3s;
       box-shadow: 0 10px 30px rgba(247, 151, 30, 0.35);
-      margin: 0.6rem 0 0.2rem 0;
+      margin: 0.4rem 0 0.2rem 0;
       letter-spacing: 0.3px;
-    }
-    @media (min-width: 768px) {
-      .btn-submit {
-        padding: 1.1rem;
-        font-size: 1.3rem;
-        border-radius: 60px;
-        margin: 0.8rem 0 0.3rem 0;
-        letter-spacing: 0.5px;
-      }
-    }
-    @media (max-width: 480px) {
-      .btn-submit {
-        padding: 0.7rem;
-        font-size: 0.95rem;
-        border-radius: 40px;
-        margin: 0.4rem 0 0.1rem 0;
-      }
     }
     .btn-submit:hover { 
       transform: scale(1.02); 
@@ -657,168 +668,134 @@
     .result-panel {
       display: none;
       background: linear-gradient(135deg, #e8f5ed, #d4efe0);
-      border-radius: 24px;
-      padding: 1.5rem 1.5rem;
-      margin-top: 1.5rem;
+      border-radius: 20px;
+      padding: 1.2rem 1.2rem;
+      margin-top: 1.2rem;
       border: 2px solid #a8d5b8;
       box-shadow: inset 0 2px 20px rgba(255,255,255,0.5), 0 10px 30px rgba(0,0,0,0.05);
     }
-    @media (min-width: 768px) {
-      .result-panel { padding: 2rem 2.5rem; border-radius: 32px; margin-top: 2.2rem; }
-    }
-    @media (max-width: 480px) {
-      .result-panel { padding: 1rem 1rem; border-radius: 18px; margin-top: 1rem; }
-    }
     .result-panel h2 {
       font-weight: 800;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       color: #0d3b2a;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
-    @media (min-width: 768px) {
-      .result-panel h2 { font-size: 2.4rem; gap: 14px; }
-    }
-    @media (max-width: 480px) {
-      .result-panel h2 { font-size: 1.2rem; gap: 6px; flex-wrap: wrap; }
-    }
-    .result-panel h2::before { content: '🏆'; font-size: 1.8rem; }
-    @media (min-width: 768px) {
-      .result-panel h2::before { font-size: 2.8rem; }
-    }
-    @media (max-width: 480px) {
-      .result-panel h2::before { font-size: 1.4rem; }
-    }
+    .result-panel h2::before { content: '🏆'; font-size: 1.5rem; }
     .result-panel .percent {
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       color: #1d5a3e;
-      margin: 0.3rem 0 1rem 0;
+      margin: 0.2rem 0 0.8rem 0;
       background: rgba(255,255,255,0.5);
-      padding: 6px 16px;
+      padding: 4px 14px;
       border-radius: 40px;
       display: inline-block;
-    }
-    @media (min-width: 768px) {
-      .result-panel .percent { font-size: 1.5rem; margin: 0.4rem 0 1.4rem 0; padding: 8px 20px; }
-    }
-    @media (max-width: 480px) {
-      .result-panel .percent { font-size: 0.9rem; padding: 4px 12px; margin: 0.2rem 0 0.6rem 0; }
     }
 
     .subject-result {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin: 10px 0 15px 0;
+      gap: 8px;
+      margin: 8px 0 12px 0;
     }
     .subject-result-item {
       background: rgba(255,255,255,0.6);
-      padding: 6px 14px;
+      padding: 4px 12px;
       border-radius: 30px;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 600;
-    }
-    @media (min-width: 768px) {
-      .subject-result-item { padding: 8px 18px; font-size: 0.95rem; }
     }
     .subject-result-item .s-name { color: #1a1a2e; }
     .subject-result-item .s-score { color: #0d3b2a; }
 
     .review-section {
-      margin-top: 1rem;
+      margin-top: 0.8rem;
       border-top: 2px solid rgba(0,0,0,0.1);
-      padding-top: 1rem;
+      padding-top: 0.8rem;
     }
     .review-section h3 {
-      font-size: 1rem;
-      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
       color: #0d3b2a;
     }
     .review-item {
-      padding: 6px 0;
-      font-size: 0.75rem;
+      padding: 4px 0;
+      font-size: 0.7rem;
       border-bottom: 1px solid rgba(0,0,0,0.05);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
-    }
-    @media (min-width: 768px) {
-      .review-item { font-size: 0.9rem; padding: 8px 0; }
     }
     .review-item.correct { color: #0f6b3a; }
     .review-item.wrong { color: #b13e3e; }
     .review-item .q-text { flex: 1; }
 
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 0.8rem;
+    }
+    .action-buttons button, .action-buttons a {
+      flex: 1;
+      min-width: 120px;
+      padding: 10px 16px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
     .wa-button {
       background: #25D366;
       color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: 0.3s;
       box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
-      text-decoration: none;
-    }
-    @media (min-width: 768px) {
-      .wa-button { padding: 16px 36px; font-size: 1.15rem; border-radius: 60px; gap: 12px; }
-    }
-    @media (max-width: 480px) {
-      .wa-button { padding: 10px 18px; font-size: 0.8rem; border-radius: 40px; gap: 6px; }
     }
     .wa-button:hover { 
       background: #1fc45a; 
       transform: scale(1.03); 
-      box-shadow: 0 12px 35px rgba(37, 211, 102, 0.45);
     }
-    .wa-link-wrap { margin-top: 0.8rem; display: inline-block; }
-    @media (min-width: 768px) {
-      .wa-link-wrap { margin-top: 1.2rem; }
+    .download-pdf-btn {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      color: white;
+      box-shadow: 0 8px 25px rgba(220, 53, 69, 0.35);
     }
+    .download-pdf-btn:hover {
+      transform: scale(1.03);
+    }
+    .wa-link-wrap { display: inline-block; width: 100%; }
 
     .questions-scroll {
-      max-height: 500px;
+      max-height: 400px;
       overflow-y: auto;
       padding-right: 4px;
       margin-bottom: 0.3rem;
       -webkit-overflow-scrolling: touch;
     }
-    @media (min-width: 768px) {
-      .questions-scroll { max-height: 650px; padding-right: 8px; }
-    }
-    @media (max-width: 480px) {
-      .questions-scroll { max-height: 400px; padding-right: 2px; }
-    }
     .questions-scroll::-webkit-scrollbar { width: 4px; }
-    @media (min-width: 768px) {
-      .questions-scroll::-webkit-scrollbar { width: 8px; }
-    }
     .questions-scroll::-webkit-scrollbar-track { background: #eef3fc; border-radius: 10px; }
     .questions-scroll::-webkit-scrollbar-thumb { 
       background: linear-gradient(135deg, #f7971e, #ffd200);
       border-radius: 10px; 
     }
-    .questions-scroll::-webkit-scrollbar-thumb:hover { background: #e08a1a; }
 
     .footer {
       text-align: center;
-      margin-top: 2rem;
-      padding-top: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 0.8rem;
       border-top: 2px solid #e8edf8;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       color: #6a7a8a;
       font-weight: 500;
-    }
-    @media (min-width: 768px) {
-      .footer { font-size: 0.95rem; margin-top: 2.5rem; padding-top: 1.5rem; }
     }
     .footer span {
       background: linear-gradient(135deg, #f7971e, #ffd200);
@@ -829,469 +806,736 @@
     }
     .footer .copyright {
       display: block;
-      margin-top: 4px;
-      font-size: 0.7rem;
+      margin-top: 3px;
+      font-size: 0.6rem;
       color: #8a9aaa;
     }
-    @media (min-width: 768px) {
-      .footer .copyright { font-size: 0.8rem; }
+
+    .certificate {
+      display: none;
+      background: linear-gradient(145deg, #fffdf0, #faf5e0);
+      border: 6px double #d4a843;
+      border-radius: 24px;
+      padding: 1.5rem 1.2rem;
+      margin-top: 1.5rem;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .certificate::before {
+      content: '🎓';
+      font-size: 2.5rem;
+      position: absolute;
+      top: -1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fffdf0;
+      padding: 0 16px;
+    }
+    .certificate .cert-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #1a3a2a;
+      letter-spacing: 2px;
+      margin-top: 0.3rem;
+    }
+    .certificate .cert-sub {
+      font-size: 0.85rem;
+      color: #4a6a5a;
+      margin: 0.3rem 0;
+    }
+    .certificate .cert-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1a5a3a;
+      border-bottom: 3px solid #d4a843;
+      display: inline-block;
+      padding: 0 16px 8px;
+      margin: 0.3rem 0;
+    }
+    .certificate .cert-detail {
+      font-size: 0.85rem;
+      color: #2a4a3a;
+      margin: 0.2rem 0;
+    }
+    .certificate .cert-footer {
+      font-size: 0.8rem;
+      color: #5a7a6a;
+      margin-top: 0.8rem;
+      border-top: 2px solid #d4a843;
+      padding-top: 0.8rem;
+    }
+    .certificate .cert-footer strong {
+      color: #1a3a2a;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .welcome-content { padding: 1.2rem 1rem; border-radius: 24px; max-height: 96vh; }
+      .welcome-content h1 { font-size: 1.5rem; }
+      .welcome-content .logo-icon { font-size: 2.5rem; }
+      .welcome-content .subtitle { font-size: 0.8rem; margin-bottom: 0.8rem; }
+      .welcome-content .features { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+      .welcome-content .feature-item { padding: 0.4rem; font-size: 0.65rem; }
+      .welcome-content .feature-item .icon { font-size: 1.2rem; }
+      .welcome-content .student-form { padding: 0.8rem; margin: 0.6rem 0; }
+      .welcome-content .student-form input,
+      .welcome-content .student-form select { font-size: 0.8rem; padding: 9px 12px; margin-bottom: 0.4rem; }
+      .btn-start { font-size: 0.9rem; padding: 0.7rem; }
+      .welcome-content .footer-text { font-size: 0.6rem; margin-top: 0.6rem; }
+      
+      .quiz-card { padding: 0.6rem 0.5rem; border-radius: 16px; }
+      .institute-header h1 { font-size: 1.1rem; }
+      .quiz-title { font-size: 0.7rem; padding: 0.4rem 0.5rem; }
+      .quiz-title span { font-size: 0.65rem; }
+      .student-info-display { padding: 0.4rem 0.8rem; font-size: 0.65rem; gap: 4px 8px; }
+      .student-info-display .label { font-size: 0.6rem; }
+      .student-info-display .value { font-size: 0.65rem; }
+      .question { padding: 0.5rem 0.6rem; border-left-width: 4px; }
+      .question h3 { font-size: 0.65rem; }
+      .option-item label { font-size: 0.6rem; }
+      .option-item { padding: 4px 6px 4px 5px; gap: 4px; }
+      .option-item input[type="radio"] { width: 12px; height: 12px; }
+      .filter-tab { font-size: 0.55rem; padding: 2px 8px; }
+      .nav-btn { font-size: 0.6rem; padding: 4px 10px; }
+      .nav-info { font-size: 0.6rem; }
+      .btn-submit { font-size: 0.75rem; padding: 0.5rem; }
+      .result-panel { padding: 0.6rem; }
+      .result-panel h2 { font-size: 1rem; }
+      .certificate .cert-title { font-size: 1rem; }
+      .certificate .cert-name { font-size: 1.2rem; }
+      .action-buttons button, .action-buttons a { font-size: 0.6rem; padding: 6px 10px; min-width: 60px; }
+      .certificate { padding: 1rem 0.8rem; }
+      .questions-scroll { max-height: 300px; }
+      .lang-toggle button { font-size: 0.5rem; padding: 2px 6px; }
+      .dark-toggle { font-size: 0.7rem; padding: 2px 6px; }
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+      .welcome-content { padding: 2rem 1.5rem; }
+      .welcome-content h1 { font-size: 2rem; }
+      .quiz-card { padding: 1.2rem 1rem; }
+      .questions-scroll { max-height: 350px; }
+    }
+
+    @media (min-width: 769px) {
+      .welcome-content { padding: 2.5rem 2.5rem; }
+      .welcome-content h1 { font-size: 2.8rem; }
+      .quiz-card { padding: 2rem 2.5rem; border-radius: 40px; }
+      .institute-header h1 { font-size: 2.2rem; }
+      .quiz-title { font-size: 1.2rem; padding: 0.8rem 1.2rem; }
+      .quiz-title span { font-size: 1.2rem; }
+      .question { padding: 1.2rem 1.5rem; }
+      .question h3 { font-size: 0.95rem; }
+      .option-item label { font-size: 0.85rem; }
+      .questions-scroll { max-height: 550px; }
+      .lang-toggle button { font-size: 0.75rem; padding: 4px 14px; }
+      .dark-toggle { font-size: 1.1rem; padding: 4px 10px; }
     }
   </style>
 </head>
 <body>
 
-<div class="quiz-card">
-
-  <div class="institute-header">
-    <h1>NOOR MUSTAFA JATOI</h1>
-    
-  </div>
-
-  <div class="top-bar">
-    <div class="quiz-title">
-      <span>🏆 Noor Mustafa Mega Quiz</span>
-      <div class="top-controls">
-        <div class="lang-toggle">
-          <button id="langEn" class="active" onclick="setLanguage('en')">EN</button>
-          <button id="langUr" onclick="setLanguage('ur')">اردو</button>
+  <!-- ===== WELCOME SCREEN ===== -->
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-content">
+      <span class="logo-icon">🎓</span>
+      <h1>NOOR MUSTAFA</h1>
+      <p class="subtitle">Welcome to the <strong>Mega Quiz Challenge</strong></p>
+      
+      <div class="features">
+        <div class="feature-item">
+          <span class="icon">📝</span>
+          60 Questions
         </div>
-        <button class="dark-toggle" onclick="toggleDark()">🌓</button>
+        <div class="feature-item">
+          <span class="icon">📚</span>
+          4 Subjects
+        </div>
+        <div class="feature-item">
+          <span class="icon">🏆</span>
+          Certificate on 80%+
+        </div>
+        <div class="feature-item">
+          <span class="icon">⏱️</span>
+          No Time Limit
+        </div>
+      </div>
+
+      <div class="student-form">
+        <input id="welcomeName" type="text" placeholder="Enter Your Full Name" autofocus>
+        <input id="welcomeRoll" type="text" placeholder="Roll Number">
+        <select id="welcomeCourse">
+          <option value="DIT">DIT (Diploma in IT)</option>
+          <option value="CIT" selected>CIT (Certificate in IT)</option>
+          <option value="OAT">OAT (Office Automation)</option>
+          <option value="ADIT">ADIT (Advanced Diploma in IT)</option>
+          <option value="DCS">DCS (Diploma in CS)</option>
+        </select>
+      </div>
+
+      <button class="btn-start" onclick="startQuiz()">
+        🚀 Start Quiz
+      </button>
+
+      <div class="footer-text">
+        Created by <span>Noor Mustafa Jatoi PJG</span>
       </div>
     </div>
   </div>
 
-  <!-- Progress Bar -->
-  <div class="progress-container">
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+  <!-- ===== QUIZ CARD ===== -->
+  <div class="quiz-card" id="quizCard">
+
+    <div class="institute-header">
+      <h1>NOOR MUSTAFA JATOI</h1>
     </div>
-    <div class="progress-text" id="progressText">0 / 55 answered</div>
-  </div>
 
-  <!-- Student -->
-  <div class="student-card">
-    <h3>Student Information</h3>
-    <div class="input-group">
-      <input id="name" type="text" placeholder="Student Name">
-      <input id="roll" type="text" placeholder="Roll Number">
-      <select id="course">
-        <option value="DIT">DIT (Diploma in IT)</option>
-        <option value="CIT" selected>CIT (Certificate in IT)</option>
-        <option value="OAT">OAT (Office Automation)</option>
-        <option value="ADIT">ADIT (Advanced Diploma in IT)</option>
-        <option value="DCS">DCS (Diploma in CS)</option>
-      </select>
+    <div class="top-bar">
+      <div class="quiz-title">
+        <span>🏆 Noor Mustafa Mega Quiz</span>
+        <div class="top-controls">
+          <div class="lang-toggle">
+            <button id="langEn" class="active" onclick="setLanguage('en')">EN</button>
+            <button id="langUr" onclick="setLanguage('ur')">اردو</button>
+          </div>
+          <button class="dark-toggle" onclick="toggleDark()">🌓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text" id="progressText">0 / 60 answered</div>
+    </div>
+
+    <!-- Student Info Display -->
+    <div class="student-info-display" id="studentInfoDisplay">
+      <span class="label">👤 Name:</span>
+      <span class="value" id="displayName">Student</span>
+      <span class="separator">|</span>
+      <span class="label">🎓 Roll:</span>
+      <span class="value" id="displayRoll">N/A</span>
+      <span class="separator">|</span>
+      <span class="label">📚 Course:</span>
+      <span class="value" id="displayCourse">CIT</span>
+    </div>
+
+    <!-- Hidden Student Card (for data storage) -->
+    <div class="student-card" id="studentCard">
+      <h3>Student Information</h3>
+      <div class="input-group">
+        <input id="name" type="text" placeholder="Student Name">
+        <input id="roll" type="text" placeholder="Roll Number">
+        <select id="course">
+          <option value="DIT">DIT (Diploma in IT)</option>
+          <option value="CIT" selected>CIT (Certificate in IT)</option>
+          <option value="OAT">OAT (Office Automation)</option>
+          <option value="ADIT">ADIT (Advanced Diploma in IT)</option>
+          <option value="DCS">DCS (Diploma in CS)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all" onclick="filterQuestions('all', this)">📌 All</button>
+      <button class="filter-tab html-tab" data-filter="HTML" onclick="filterQuestions('HTML', this)">🟠 HTML</button>
+      <button class="filter-tab css-tab" data-filter="CSS" onclick="filterQuestions('CSS', this)">🔵 CSS</button>
+      <button class="filter-tab c-tab" data-filter="C" onclick="filterQuestions('C', this)">🔷 C Prog.</button>
+      <button class="filter-tab office-tab" data-filter="Office" onclick="filterQuestions('Office', this)">🔴 MS Office</button>
+    </div>
+
+    <!-- Questions -->
+    <div class="questions-scroll" id="questionsContainer"></div>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+      <button class="nav-btn" id="prevBtn" onclick="navigateQuestions('prev')">◀ Previous</button>
+      <span class="nav-info" id="navInfo">Showing: All Questions (60)</span>
+      <button class="nav-btn" id="nextBtn" onclick="navigateQuestions('next')">Next ▶</button>
+    </div>
+
+    <button class="btn-submit" id="submitBtn" onclick="quiz()">✅ Submit Quiz</button>
+
+    <div class="result-panel" id="result">
+      <h2 id="score"></h2>
+      <div class="percent" id="percent"></div>
+      <div class="subject-result" id="subjectResult"></div>
+      <div class="review-section" id="reviewSection">
+        <h3>📝 Review Your Answers:</h3>
+        <div id="reviewList"></div>
+      </div>
+      <div class="action-buttons">
+        <a id="waLink" target="_blank" class="wa-link-wrap">
+          <button class="wa-button">📱 Send Result</button>
+        </a>
+        <button class="download-pdf-btn" onclick="downloadCertificatePDF()">📄 Download PDF</button>
+      </div>
+    </div>
+
+    <!-- Certificate -->
+    <div class="certificate" id="certificate">
+      <div class="cert-title">🎓 CERTIFICATE OF ACHIEVEMENT</div>
+      <div class="cert-sub">This is to certify that</div>
+      <div class="cert-name" id="certName">Student Name</div>
+      <div class="cert-detail">has successfully completed the <strong>Noor Mustafa Mega Quiz</strong></div>
+      <div class="cert-detail">with a score of <strong id="certScore">0/60</strong> and percentage <strong id="certPercent">0%</strong></div>
+      <div class="cert-footer">
+        <strong>Noor Mustafa Jatoi PJG</strong>
+      </div>
+    </div>
+
+    <div class="footer">
+      Created by <span>Noor Mustafa Jatoi PJG</span>
+      <span class="copyright">© 2024 NOOR MUSTAFA. All Rights Reserved.</span>
     </div>
   </div>
 
-  <!-- Filter Tabs -->
-  <div class="filter-tabs">
-    <button class="filter-tab active" data-filter="all" onclick="filterQuestions('all', this)">📌 All</button>
-    <button class="filter-tab html-tab" data-filter="HTML" onclick="filterQuestions('HTML', this)">🟠 HTML</button>
-    <button class="filter-tab css-tab" data-filter="CSS" onclick="filterQuestions('CSS', this)">🔵 CSS</button>
-    <button class="filter-tab c-tab" data-filter="C" onclick="filterQuestions('C', this)">🔷 C Prog.</button>
-    <button class="filter-tab office-tab" data-filter="Office" onclick="filterQuestions('Office', this)">🔴 MS Office</button>
-  </div>
+  <script>
+    // ===== 60 QUESTIONS =====
+    const questions = [
+      { subject: 'HTML', en: "HTML ka Full Form?", ur: "HTML کا مکمل نام؟", opts: { en: ["Hyper Text Markup Language", "Home Tool Markup Language", "High Tech Modern Language"], ur: ["ہائپر ٹیکسٹ مارک اپ لینگویج", "ہوم ٹول مارک اپ لینگویج", "ہائی ٹیک جدید لینگویج"] }, correct: 0 },
+      { subject: 'HTML', en: "HTML kis liye use hoti hai?", ur: "HTML کس لیے استعمال ہوتی ہے؟", opts: { en: ["Web Pages Banana", "Games Install Karna", "Database Manage Karna"], ur: ["ویب پیجز بنانا", "گیمز انسٹال کرنا", "ڈیٹا بیس مینیج کرنا"] }, correct: 0 },
+      { subject: 'HTML', en: "Image tag konsa hai?", ur: "امیج ٹیگ کونسا ہے؟", opts: { en: ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;"], ur: ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;"] }, correct: 0 },
+      { subject: 'HTML', en: "Line break tag konsa hai?", ur: "لائن بریک ٹیگ کونسا؟", opts: { en: ["&lt;hr&gt;", "&lt;br&gt;", "&lt;lb&gt;"], ur: ["&lt;hr&gt;", "&lt;br&gt;", "&lt;lb&gt;"] }, correct: 1 },
+      { subject: 'HTML', en: "HTML document ka root tag?", ur: "HTML دستاویز کا روٹ ٹیگ؟", opts: { en: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;"], ur: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;"] }, correct: 2 },
+      { subject: 'HTML', en: "Heading tag for largest heading?", ur: "سب سے بڑے ہیڈنگ کا ٹیگ؟", opts: { en: ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;h3&gt;"], ur: ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;h3&gt;"] }, correct: 1 },
+      { subject: 'HTML', en: "Paragraph tag?", ur: "پیراگراف ٹیگ؟", opts: { en: ["&lt;para&gt;", "&lt;pg&gt;", "&lt;p&gt;"], ur: ["&lt;para&gt;", "&lt;pg&gt;", "&lt;p&gt;"] }, correct: 2 },
+      { subject: 'HTML', en: "Which tag creates a hyperlink?", ur: "ہائپر لنک کونسا ٹیگ بناتا ہے؟", opts: { en: ["&lt;link&gt;", "&lt;href&gt;", "&lt;a&gt;"], ur: ["&lt;link&gt;", "&lt;href&gt;", "&lt;a&gt;"] }, correct: 2 },
+      { subject: 'HTML', en: "Attribute for image source?", ur: "امیج سورس کی صفت؟", opts: { en: ["href", "alt", "src"], ur: ["href", "alt", "src"] }, correct: 2 },
+      { subject: 'HTML', en: "Which tag is used for div?", ur: "ڈیو کے لیے کونسا ٹیگ؟", opts: { en: ["&lt;section&gt;", "&lt;box&gt;", "&lt;div&gt;"], ur: ["&lt;section&gt;", "&lt;box&gt;", "&lt;div&gt;"] }, correct: 2 },
+      { subject: 'HTML', en: "Which tag is used for unordered list?", ur: "غیر ترتیب شدہ فہرست کے لیے کونسا ٹیگ؟", opts: { en: ["&lt;ol&gt;", "&lt;ul&gt;", "&lt;li&gt;"], ur: ["&lt;ol&gt;", "&lt;ul&gt;", "&lt;li&gt;"] }, correct: 1 },
+      { subject: 'CSS', en: "CSS ka Full Form?", ur: "CSS کا مکمل نام؟", opts: { en: ["Creative Style Sheets", "Computer Style System", "Cascading Style Sheets"], ur: ["کریٹیو اسٹائل شیٹس", "کمپیوٹر اسٹائل سسٹم", "کیسکیڈنگ اسٹائل شیٹس"] }, correct: 2 },
+      { subject: 'CSS', en: "CSS kis liye use hoti hai?", ur: "CSS کس لیے استعمال ہوتی ہے؟", opts: { en: ["Database Management", "Server Side Scripting", "Styling Web Pages"], ur: ["ڈیٹا بیس مینیجمنٹ", "سرور سائیڈ سکرپٹنگ", "ویب پیجز کو اسٹائل کرنا"] }, correct: 2 },
+      { subject: 'CSS', en: "Inline CSS ko kaise lagayein?", ur: "Inline CSS کیسے لگائیں؟", opts: { en: ["&lt;style&gt; tag se", "External file se", "style attribute se"], ur: ["&lt;style&gt; ٹیگ سے", "ایکسترنل فائل سے", "سٹائل ایٹریبیوٹ سے"] }, correct: 2 },
+      { subject: 'CSS', en: "Internal CSS ko kaise lagayein?", ur: "Internal CSS کیسے لگائیں؟", opts: { en: ["style attribute se", "External file se", "&lt;style&gt; tag se"], ur: ["سٹائل ایٹریبیوٹ سے", "ایکسترنل فائل سے", "&lt;style&gt; ٹیگ سے"] }, correct: 2 },
+      { subject: 'CSS', en: "External CSS ko kaise link karein?", ur: "External CSS کو کیسے لنک کریں؟", opts: { en: ["&lt;style&gt; tag se", "style attribute se", "&lt;link&gt; tag se"], ur: ["&lt;style&gt; ٹیگ سے", "سٹائل ایٹریبیوٹ سے", "&lt;link&gt; ٹیگ سے"] }, correct: 2 },
+      { subject: 'CSS', en: "Which property is used to change text color in CSS?", ur: "CSS میں ٹیکسٹ کا رنگ تبدیل کرنے کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["text-color", "font-color", "color"], ur: ["text-color", "font-color", "color"] }, correct: 2 },
+      { subject: 'CSS', en: "Which property is used for background color in CSS?", ur: "CSS میں بیک گراؤنڈ کلر کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["bg-color", "color-background", "background-color"], ur: ["bg-color", "color-background", "background-color"] }, correct: 2 },
+      { subject: 'CSS', en: "Which property is used for font size in CSS?", ur: "CSS میں فونٹ سائز کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["text-size", "font-size", "size"], ur: ["text-size", "font-size", "size"] }, correct: 1 },
+      { subject: 'CSS', en: "Which property is used for margin in CSS?", ur: "CSS میں مارجن کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["padding", "border", "margin"], ur: ["padding", "border", "margin"] }, correct: 2 },
+      { subject: 'CSS', en: "Which property is used for padding in CSS?", ur: "CSS میں پیڈنگ کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["margin", "border", "padding"], ur: ["margin", "border", "padding"] }, correct: 2 },
+      { subject: 'C', en: "C language kisne banai?", ur: "C زبان کس نے بنائی؟", opts: { en: ["Bjarne Stroustrup", "James Gosling", "Dennis Ritchie"], ur: ["بیجرن سٹراسٹرپ", "جیمز گوسلنگ", "ڈینس ریچی"] }, correct: 2 },
+      { subject: 'C', en: "Which header file is used for printf()?", ur: "printf() کے لیے کونسی ہیڈر فائل استعمال ہوتی ہے؟", opts: { en: ["stdlib.h", "string.h", "stdio.h"], ur: ["stdlib.h", "string.h", "stdio.h"] }, correct: 2 },
+      { subject: 'C', en: "Which of these is NOT a valid data type in C?", ur: "C میں کونسا ڈیٹا ٹائپ درست نہیں ہے؟", opts: { en: ["int", "float", "string"], ur: ["int", "float", "string"] }, correct: 2 },
+      { subject: 'C', en: "Which operator is used for address of a variable in C?", ur: "C میں متغیر کا ایڈریس حاصل کرنے کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["*", "#", "&"], ur: ["*", "#", "&"] }, correct: 2 },
+      { subject: 'C', en: "Which loop runs at least once in C?", ur: "C میں کونسا لوپ کم از کم ایک بار ضرور چلتا ہے؟", opts: { en: ["while", "for", "do-while"], ur: ["while", "for", "do-while"] }, correct: 2 },
+      { subject: 'C', en: "Which operator is used for logical AND in C?", ur: "C میں لاجیکل AND کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["||", "&", "&&"], ur: ["||", "&", "&&"] }, correct: 2 },
+      { subject: 'C', en: "What is the size of int in 32-bit C compiler?", ur: "32-bit C کمپائلر میں int کا سائز کیا ہے؟", opts: { en: ["2 bytes", "8 bytes", "4 bytes"], ur: ["2 بائٹس", "8 بائٹس", "4 بائٹس"] }, correct: 2 },
+      { subject: 'C', en: "Which format specifier is used for integer in C?", ur: "C میں integer کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%f", "%c", "%d"], ur: ["%f", "%c", "%d"] }, correct: 2 },
+      { subject: 'C', en: "Which format specifier is used for float in C?", ur: "C میں float کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%d", "%c", "%f"], ur: ["%d", "%c", "%f"] }, correct: 2 },
+      { subject: 'C', en: "Which format specifier is used for character in C?", ur: "C میں character کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%d", "%f", "%c"], ur: ["%d", "%f", "%c"] }, correct: 2 },
+      { subject: 'C', en: "Which function is used to take input in C?", ur: "C میں انپٹ لینے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["printf()", "gets()", "scanf()"], ur: ["printf()", "gets()", "scanf()"] }, correct: 2 },
+      { subject: 'C', en: "Which file extension is used for C source files?", ur: "C سورس فائلز کے لیے کونسا ایکسٹینشن استعمال ہوتا ہے؟", opts: { en: [".cpp", ".java", ".c"], ur: [".cpp", ".java", ".c"] }, correct: 2 },
+      { subject: 'C', en: "Which keyword is used to define a constant in C?", ur: "C میں کانسٹنٹ ڈیفائن کرنے کے لیے کونسا کی ورڈ استعمال ہوتا ہے؟", opts: { en: ["const", "constant", "define"], ur: ["const", "constant", "define"] }, correct: 0 },
+      { subject: 'Office', en: "MS Word kis liye use hota hai?", ur: "MS Word کس لیے استعمال ہوتا ہے؟", opts: { en: ["Spreadsheets", "Presentations", "Document Writing"], ur: ["اسپریڈ شیٹس", "پریزنٹیشنز", "دستاویز لکھنا"] }, correct: 2 },
+      { subject: 'Office', en: "MS Excel kis liye use hota hai?", ur: "MS Excel کس لیے استعمال ہوتا ہے؟", opts: { en: ["Document Writing", "Presentations", "Data Analysis"], ur: ["دستاویز لکھنا", "پریزنٹیشنز", "ڈیٹا تجزیہ"] }, correct: 2 },
+      { subject: 'Office', en: "MS PowerPoint kis liye use hota hai?", ur: "MS PowerPoint کس لیے استعمال ہوتا ہے؟", opts: { en: ["Data Analysis", "Document Writing", "Presentations"], ur: ["ڈیٹا تجزیہ", "دستاویز لکھنا", "پریزنٹیشنز"] }, correct: 2 },
+      { subject: 'Office', en: "Word file ka extension kya hai?", ur: "ورڈ فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".xlsx", ".pptx", ".docx"], ur: [".xlsx", ".pptx", ".docx"] }, correct: 2 },
+      { subject: 'Office', en: "Excel file ka extension kya hai?", ur: "ایکسل فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".docx", ".pptx", ".xlsx"], ur: [".docx", ".pptx", ".xlsx"] }, correct: 2 },
+      { subject: 'Office', en: "PowerPoint file ka extension kya hai?", ur: "پاورپوائنٹ فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".docx", ".xlsx", ".pptx"], ur: [".docx", ".xlsx", ".pptx"] }, correct: 2 },
+      { subject: 'Office', en: "Which shortcut is used to save a file in MS Office?", ur: "MS Office میں فائل سیو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Save", "Ctrl+F", "Ctrl+S"], ur: ["Ctrl+Save", "Ctrl+F", "Ctrl+S"] }, correct: 2 },
+      { subject: 'Office', en: "Which shortcut is used to copy text?", ur: "ٹیکسٹ کاپی کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+V", "Ctrl+X", "Ctrl+C"], ur: ["Ctrl+V", "Ctrl+X", "Ctrl+C"] }, correct: 2 },
+      { subject: 'Office', en: "Which shortcut is used to paste text?", ur: "ٹیکسٹ پیسٹ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+C", "Ctrl+X", "Ctrl+V"], ur: ["Ctrl+C", "Ctrl+X", "Ctrl+V"] }, correct: 2 },
+      { subject: 'Office', en: "Which shortcut is used to cut text?", ur: "ٹیکسٹ کٹ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+C", "Ctrl+V", "Ctrl+X"], ur: ["Ctrl+C", "Ctrl+V", "Ctrl+X"] }, correct: 2 },
+      { subject: 'Office', en: "Which shortcut is used to undo in MS Office?", ur: "MS Office میں انڈو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Y", "Ctrl+U", "Ctrl+Z"], ur: ["Ctrl+Y", "Ctrl+U", "Ctrl+Z"] }, correct: 2 },
+      { subject: 'Office', en: "Which shortcut is used to redo in MS Office?", ur: "MS Office میں ریڈو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Z", "Ctrl+R", "Ctrl+Y"], ur: ["Ctrl+Z", "Ctrl+R", "Ctrl+Y"] }, correct: 2 },
+      { subject: 'Office', en: "Which function is used to add numbers in Excel?", ur: "ایکسل میں نمبرز جمع کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["ADD", "TOTAL", "SUM"], ur: ["ADD", "TOTAL", "SUM"] }, correct: 2 },
+      { subject: 'Office', en: "Which function is used to find average in Excel?", ur: "ایکسل میں اوسط نکالنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MEAN", "AVG", "AVERAGE"], ur: ["MEAN", "AVG", "AVERAGE"] }, correct: 2 },
+      { subject: 'Office', en: "Which function is used to count cells in Excel?", ur: "ایکسل میں سیلز گننے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["COUNTA", "COUNTIF", "COUNT"], ur: ["COUNTA", "COUNTIF", "COUNT"] }, correct: 2 },
+      { subject: 'Office', en: "Which function finds the maximum value in Excel?", ur: "ایکسل میں زیادہ سے زیادہ ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MIN", "LARGE", "MAX"], ur: ["MIN", "LARGE", "MAX"] }, correct: 2 },
+      { subject: 'Office', en: "Which function finds the minimum value in Excel?", ur: "ایکسل میں کم سے کم ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MAX", "SMALL", "MIN"], ur: ["MAX", "SMALL", "MIN"] }, correct: 2 },
+      { subject: 'Office', en: "What is the default file extension for Word 2016?", ur: "Word 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".doc", ".dotx", ".docx"], ur: [".doc", ".dotx", ".docx"] }, correct: 2 },
+      { subject: 'Office', en: "What is the default file extension for Excel 2016?", ur: "Excel 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".xls", ".xltx", ".xlsx"], ur: [".xls", ".xltx", ".xlsx"] }, correct: 2 },
+      { subject: 'Office', en: "What is the default file extension for PowerPoint 2016?", ur: "PowerPoint 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".ppt", ".potx", ".pptx"], ur: [".ppt", ".potx", ".pptx"] }, correct: 2 },
+      { subject: 'Office', en: "Which view is used to edit slides in PowerPoint?", ur: "PowerPoint میں سلائیڈز ایڈٹ کرنے کے لیے کونسا ویو استعمال ہوتا ہے؟", opts: { en: ["Slide Sorter", "Reading View", "Normal View"], ur: ["سلائیڈ سورٹر", "ریڈنگ ویو", "نارمل ویو"] }, correct: 2 },
+      { subject: 'Office', en: "Which shortcut is used to bold text in MS Office?", ur: "MS Office میں ٹیکسٹ بولڈ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+1", "Ctrl+Shift+B", "Ctrl+B"], ur: ["Ctrl+1", "Ctrl+Shift+B", "Ctrl+B"] }, correct: 2 },
+      { subject: 'Office', en: "Which shortcut is used to italicize text in MS Office?", ur: "MS Office میں ٹیکسٹ اٹالک کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+I", "Ctrl+Shift+I", "Ctrl+Italic"], ur: ["Ctrl+I", "Ctrl+Shift+I", "Ctrl+Italic"] }, correct: 0 },
+      { subject: 'Office', en: "Which shortcut is used to underline text in MS Office?", ur: "MS Office میں ٹیکسٹ انڈر لائن کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+U", "Ctrl+Shift+U", "Ctrl+Underline"], ur: ["Ctrl+U", "Ctrl+Shift+U", "Ctrl+Underline"] }, correct: 0 },
+      { subject: 'Office', en: "Which function is used to find a value in Excel?", ur: "ایکسل میں ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["LOOKUP", "FIND", "VLOOKUP"], ur: ["LOOKUP", "FIND", "VLOOKUP"] }, correct: 2 },
+      { subject: 'Office', en: "Which function is used to get current date in Excel?", ur: "ایکسل میں موجودہ تاریخ حاصل کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["NOW", "DATE", "TODAY"], ur: ["NOW", "DATE", "TODAY"] }, correct: 2 }
+    ];
 
-  <!-- Questions -->
-  <div class="questions-scroll" id="questionsContainer"></div>
+    let currentLang = 'en';
+    let total = 0;
+    let isQuizSubmitted = false;
+    let userAnswers = {};
+    let currentFilter = 'all';
+    let currentQuestionIndex = 0;
+    let wrongNumbers = [];
+    const container = document.getElementById('questionsContainer');
 
-  <!-- Navigation -->
-  <div class="nav-container">
-    <button class="nav-btn" id="prevBtn" onclick="navigateQuestions('prev')">◀ Previous</button>
-    <span class="nav-info" id="navInfo">Showing: All Questions</span>
-    <button class="nav-btn" id="nextBtn" onclick="navigateQuestions('next')">Next ▶</button>
-  </div>
-
-  <button class="btn-submit" id="submitBtn" onclick="quiz()">✅ Submit Quiz</button>
-
-  <div class="result-panel" id="result">
-    <h2 id="score"></h2>
-    <div class="percent" id="percent"></div>
-    <div class="subject-result" id="subjectResult"></div>
-    <div class="review-section" id="reviewSection">
-      <h3>📝 Review Your Answers:</h3>
-      <div id="reviewList"></div>
-    </div>
-    <div>
-      <a id="waLink" target="_blank" class="wa-link-wrap">
-        <button class="wa-button">📱 Send Result To Teacher</button>
-      </a>
-    </div>
-  </div>
-
-  <div class="footer">
-    Created by <span>Noor Mustafa Jatoi PJG</span>
-    <span class="copyright">© 2024 WebCode Institute. All Rights Reserved.</span>
-  </div>
-</div>
-
-<script>
-  // ---------- 55 Questions ----------
-  const questions = [
-    // ===== HTML (0-9) =====
-    { subject: 'HTML', en: "HTML ka Full Form?", ur: "HTML کا مکمل نام؟", opts: { en: ["Hyper Text Markup Language", "Home Tool Markup Language", "High Tech Modern Language"], ur: ["ہائپر ٹیکسٹ مارک اپ لینگویج", "ہوم ٹول مارک اپ لینگویج", "ہائی ٹیک جدید لینگویج"] }, correct: 0 },
-    { subject: 'HTML', en: "HTML kis liye use hoti hai?", ur: "HTML کس لیے استعمال ہوتی ہے؟", opts: { en: ["Web Pages Banana", "Games Install Karna", "Database Manage Karna"], ur: ["ویب پیجز بنانا", "گیمز انسٹال کرنا", "ڈیٹا بیس مینیج کرنا"] }, correct: 0 },
-    { subject: 'HTML', en: "Image tag konsa hai?", ur: "امیج ٹیگ کونسا ہے؟", opts: { en: ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;"], ur: ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;"] }, correct: 2 },
-    { subject: 'HTML', en: "Line break tag konsa hai?", ur: "لائن بریک ٹیگ کونسا؟", opts: { en: ["&lt;hr&gt;", "&lt;br&gt;", "&lt;lb&gt;"], ur: ["&lt;hr&gt;", "&lt;br&gt;", "&lt;lb&gt;"] }, correct: 1 },
-    { subject: 'HTML', en: "HTML document ka root tag?", ur: "HTML دستاویز کا روٹ ٹیگ؟", opts: { en: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;"], ur: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;"] }, correct: 2 },
-    { subject: 'HTML', en: "Heading tag for largest heading?", ur: "سب سے بڑے ہیڈنگ کا ٹیگ؟", opts: { en: ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;h3&gt;"], ur: ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;h3&gt;"] }, correct: 1 },
-    { subject: 'HTML', en: "Paragraph tag?", ur: "پیراگراف ٹیگ؟", opts: { en: ["&lt;para&gt;", "&lt;pg&gt;", "&lt;p&gt;"], ur: ["&lt;para&gt;", "&lt;pg&gt;", "&lt;p&gt;"] }, correct: 2 },
-    { subject: 'HTML', en: "Which tag creates a hyperlink?", ur: "ہائپر لنک کونسا ٹیگ بناتا ہے؟", opts: { en: ["&lt;link&gt;", "&lt;href&gt;", "&lt;a&gt;"], ur: ["&lt;link&gt;", "&lt;href&gt;", "&lt;a&gt;"] }, correct: 2 },
-    { subject: 'HTML', en: "Attribute for image source?", ur: "امیج سورس کی صفت؟", opts: { en: ["href", "alt", "src"], ur: ["href", "alt", "src"] }, correct: 2 },
-    { subject: 'HTML', en: "Which tag is used for div?", ur: "ڈیو کے لیے کونسا ٹیگ؟", opts: { en: ["&lt;section&gt;", "&lt;box&gt;", "&lt;div&gt;"], ur: ["&lt;section&gt;", "&lt;box&gt;", "&lt;div&gt;"] }, correct: 2 },
-    
-    // ===== CSS (10-19) =====
-    { subject: 'CSS', en: "CSS ka Full Form?", ur: "CSS کا مکمل نام؟", opts: { en: ["Creative Style Sheets", "Computer Style System", "Cascading Style Sheets"], ur: ["کریٹیو اسٹائل شیٹس", "کمپیوٹر اسٹائل سسٹم", "کیسکیڈنگ اسٹائل شیٹس"] }, correct: 2 },
-    { subject: 'CSS', en: "CSS kis liye use hoti hai?", ur: "CSS کس لیے استعمال ہوتی ہے؟", opts: { en: ["Database Management", "Server Side Scripting", "Styling Web Pages"], ur: ["ڈیٹا بیس مینیجمنٹ", "سرور سائیڈ سکرپٹنگ", "ویب پیجز کو اسٹائل کرنا"] }, correct: 2 },
-    { subject: 'CSS', en: "Inline CSS ko kaise lagayein?", ur: "Inline CSS کیسے لگائیں؟", opts: { en: ["&lt;style&gt; tag se", "External file se", "style attribute se"], ur: ["&lt;style&gt; ٹیگ سے", "ایکسترنل فائل سے", "سٹائل ایٹریبیوٹ سے"] }, correct: 2 },
-    { subject: 'CSS', en: "Internal CSS ko kaise lagayein?", ur: "Internal CSS کیسے لگائیں؟", opts: { en: ["style attribute se", "External file se", "&lt;style&gt; tag se"], ur: ["سٹائل ایٹریبیوٹ سے", "ایکسترنل فائل سے", "&lt;style&gt; ٹیگ سے"] }, correct: 2 },
-    { subject: 'CSS', en: "External CSS ko kaise link karein?", ur: "External CSS کو کیسے لنک کریں؟", opts: { en: ["&lt;style&gt; tag se", "style attribute se", "&lt;link&gt; tag se"], ur: ["&lt;style&gt; ٹیگ سے", "سٹائل ایٹریبیوٹ سے", "&lt;link&gt; ٹیگ سے"] }, correct: 2 },
-    { subject: 'CSS', en: "Which property is used to change text color in CSS?", ur: "CSS میں ٹیکسٹ کا رنگ تبدیل کرنے کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["text-color", "font-color", "color"], ur: ["text-color", "font-color", "color"] }, correct: 2 },
-    { subject: 'CSS', en: "Which property is used for background color in CSS?", ur: "CSS میں بیک گراؤنڈ کلر کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["bg-color", "color-background", "background-color"], ur: ["bg-color", "color-background", "background-color"] }, correct: 2 },
-    { subject: 'CSS', en: "Which property is used for font size in CSS?", ur: "CSS میں فونٹ سائز کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["text-size", "font-size", "size"], ur: ["text-size", "font-size", "size"] }, correct: 1 },
-    { subject: 'CSS', en: "Which property is used for margin in CSS?", ur: "CSS میں مارجن کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["padding", "border", "margin"], ur: ["padding", "border", "margin"] }, correct: 2 },
-    { subject: 'CSS', en: "Which property is used for padding in CSS?", ur: "CSS میں پیڈنگ کے لیے کونسی پراپرٹی استعمال ہوتی ہے؟", opts: { en: ["margin", "border", "padding"], ur: ["margin", "border", "padding"] }, correct: 2 },
-    
-    // ===== C Programming (20-32) =====
-    { subject: 'C', en: "C language kisne banai?", ur: "C زبان کس نے بنائی؟", opts: { en: ["Bjarne Stroustrup", "James Gosling", "Dennis Ritchie"], ur: ["بیجرن سٹراسٹرپ", "جیمز گوسلنگ", "ڈینس ریچی"] }, correct: 2 },
-    { subject: 'C', en: "Which header file is used for printf()?", ur: "printf() کے لیے کونسی ہیڈر فائل استعمال ہوتی ہے؟", opts: { en: ["stdlib.h", "string.h", "stdio.h"], ur: ["stdlib.h", "string.h", "stdio.h"] }, correct: 2 },
-    { subject: 'C', en: "Which of these is NOT a valid data type in C?", ur: "C میں کونسا ڈیٹا ٹائپ درست نہیں ہے؟", opts: { en: ["int", "float", "string"], ur: ["int", "float", "string"] }, correct: 2 },
-    { subject: 'C', en: "Which operator is used for address of a variable in C?", ur: "C میں متغیر کا ایڈریس حاصل کرنے کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["*", "#", "&"], ur: ["*", "#", "&"] }, correct: 2 },
-    { subject: 'C', en: "Which loop runs at least once in C?", ur: "C میں کونسا لوپ کم از کم ایک بار ضرور چلتا ہے؟", opts: { en: ["while", "for", "do-while"], ur: ["while", "for", "do-while"] }, correct: 2 },
-    { subject: 'C', en: "Which operator is used for logical AND in C?", ur: "C میں لاجیکل AND کے لیے کونسا آپریٹر استعمال ہوتا ہے؟", opts: { en: ["||", "&", "&&"], ur: ["||", "&", "&&"] }, correct: 2 },
-    { subject: 'C', en: "What is the size of int in 32-bit C compiler?", ur: "32-bit C کمپائلر میں int کا سائز کیا ہے؟", opts: { en: ["2 bytes", "8 bytes", "4 bytes"], ur: ["2 بائٹس", "8 بائٹس", "4 بائٹس"] }, correct: 2 },
-    { subject: 'C', en: "Which format specifier is used for integer in C?", ur: "C میں integer کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%f", "%c", "%d"], ur: ["%f", "%c", "%d"] }, correct: 2 },
-    { subject: 'C', en: "Which format specifier is used for float in C?", ur: "C میں float کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%d", "%c", "%f"], ur: ["%d", "%c", "%f"] }, correct: 2 },
-    { subject: 'C', en: "Which format specifier is used for character in C?", ur: "C میں character کے لیے کونسا فارمیٹ اسپیسفائر استعمال ہوتا ہے؟", opts: { en: ["%d", "%f", "%c"], ur: ["%d", "%f", "%c"] }, correct: 2 },
-    { subject: 'C', en: "Which function is used to take input in C?", ur: "C میں انپٹ لینے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["printf()", "gets()", "scanf()"], ur: ["printf()", "gets()", "scanf()"] }, correct: 2 },
-    { subject: 'C', en: "Which function is used to allocate memory in C?", ur: "C میں میموری الوکیٹ کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["alloc()", "new()", "malloc()"], ur: ["alloc()", "new()", "malloc()"] }, correct: 2 },
-    { subject: 'C', en: "Which file extension is used for C source files?", ur: "C سورس فائلز کے لیے کونسا ایکسٹینشن استعمال ہوتا ہے؟", opts: { en: [".cpp", ".java", ".c"], ur: [".cpp", ".java", ".c"] }, correct: 2 },
-    
-    // ===== MS Office (Word, PowerPoint, Excel) (33-54) =====
-    { subject: 'Office', en: "MS Word kis liye use hota hai?", ur: "MS Word کس لیے استعمال ہوتا ہے؟", opts: { en: ["Spreadsheets", "Presentations", "Document Writing"], ur: ["اسپریڈ شیٹس", "پریزنٹیشنز", "دستاویز لکھنا"] }, correct: 2 },
-    { subject: 'Office', en: "MS Excel kis liye use hota hai?", ur: "MS Excel کس لیے استعمال ہوتا ہے؟", opts: { en: ["Document Writing", "Presentations", "Data Analysis"], ur: ["دستاویز لکھنا", "پریزنٹیشنز", "ڈیٹا تجزیہ"] }, correct: 2 },
-    { subject: 'Office', en: "MS PowerPoint kis liye use hota hai?", ur: "MS PowerPoint کس لیے استعمال ہوتا ہے؟", opts: { en: ["Data Analysis", "Document Writing", "Presentations"], ur: ["ڈیٹا تجزیہ", "دستاویز لکھنا", "پریزنٹیشنز"] }, correct: 2 },
-    { subject: 'Office', en: "Word file ka extension kya hai?", ur: "ورڈ فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".xlsx", ".pptx", ".docx"], ur: [".xlsx", ".pptx", ".docx"] }, correct: 2 },
-    { subject: 'Office', en: "Excel file ka extension kya hai?", ur: "ایکسل فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".docx", ".pptx", ".xlsx"], ur: [".docx", ".pptx", ".xlsx"] }, correct: 2 },
-    { subject: 'Office', en: "PowerPoint file ka extension kya hai?", ur: "پاورپوائنٹ فائل کا ایکسٹینشن کیا ہے؟", opts: { en: [".docx", ".xlsx", ".pptx"], ur: [".docx", ".xlsx", ".pptx"] }, correct: 2 },
-    { subject: 'Office', en: "Which shortcut is used to save a file in MS Office?", ur: "MS Office میں فائل سیو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Save", "Ctrl+F", "Ctrl+S"], ur: ["Ctrl+Save", "Ctrl+F", "Ctrl+S"] }, correct: 2 },
-    { subject: 'Office', en: "Which shortcut is used to copy text?", ur: "ٹیکسٹ کاپی کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+V", "Ctrl+X", "Ctrl+C"], ur: ["Ctrl+V", "Ctrl+X", "Ctrl+C"] }, correct: 2 },
-    { subject: 'Office', en: "Which shortcut is used to paste text?", ur: "ٹیکسٹ پیسٹ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+C", "Ctrl+X", "Ctrl+V"], ur: ["Ctrl+C", "Ctrl+X", "Ctrl+V"] }, correct: 2 },
-    { subject: 'Office', en: "Which shortcut is used to cut text?", ur: "ٹیکسٹ کٹ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+C", "Ctrl+V", "Ctrl+X"], ur: ["Ctrl+C", "Ctrl+V", "Ctrl+X"] }, correct: 2 },
-    { subject: 'Office', en: "Which shortcut is used to undo in MS Office?", ur: "MS Office میں انڈو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Y", "Ctrl+U", "Ctrl+Z"], ur: ["Ctrl+Y", "Ctrl+U", "Ctrl+Z"] }, correct: 2 },
-    { subject: 'Office', en: "Which shortcut is used to redo in MS Office?", ur: "MS Office میں ریڈو کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+Z", "Ctrl+R", "Ctrl+Y"], ur: ["Ctrl+Z", "Ctrl+R", "Ctrl+Y"] }, correct: 2 },
-    { subject: 'Office', en: "Which function is used to add numbers in Excel?", ur: "ایکسل میں نمبرز جمع کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["ADD", "TOTAL", "SUM"], ur: ["ADD", "TOTAL", "SUM"] }, correct: 2 },
-    { subject: 'Office', en: "Which function is used to find average in Excel?", ur: "ایکسل میں اوسط نکالنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MEAN", "AVG", "AVERAGE"], ur: ["MEAN", "AVG", "AVERAGE"] }, correct: 2 },
-    { subject: 'Office', en: "Which function is used to count cells in Excel?", ur: "ایکسل میں سیلز گننے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["COUNTA", "COUNTIF", "COUNT"], ur: ["COUNTA", "COUNTIF", "COUNT"] }, correct: 2 },
-    { subject: 'Office', en: "Which function finds the maximum value in Excel?", ur: "ایکسل میں زیادہ سے زیادہ ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MIN", "LARGE", "MAX"], ur: ["MIN", "LARGE", "MAX"] }, correct: 2 },
-    { subject: 'Office', en: "Which function finds the minimum value in Excel?", ur: "ایکسل میں کم سے کم ویلیو تلاش کرنے کے لیے کونسا فنکشن استعمال ہوتا ہے؟", opts: { en: ["MAX", "SMALL", "MIN"], ur: ["MAX", "SMALL", "MIN"] }, correct: 2 },
-    { subject: 'Office', en: "What is the default file extension for Word 2016?", ur: "Word 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".doc", ".dotx", ".docx"], ur: [".doc", ".dotx", ".docx"] }, correct: 2 },
-    { subject: 'Office', en: "What is the default file extension for Excel 2016?", ur: "Excel 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".xls", ".xltx", ".xlsx"], ur: [".xls", ".xltx", ".xlsx"] }, correct: 2 },
-    { subject: 'Office', en: "What is the default file extension for PowerPoint 2016?", ur: "PowerPoint 2016 کی ڈیفالٹ فائل ایکسٹینشن کیا ہے؟", opts: { en: [".ppt", ".potx", ".pptx"], ur: [".ppt", ".potx", ".pptx"] }, correct: 2 },
-    { subject: 'Office', en: "Which view is used to edit slides in PowerPoint?", ur: "PowerPoint میں سلائیڈز ایڈٹ کرنے کے لیے کونسا ویو استعمال ہوتا ہے؟", opts: { en: ["Slide Sorter", "Reading View", "Normal View"], ur: ["سلائیڈ سورٹر", "ریڈنگ ویو", "نارمل ویو"] }, correct: 2 },
-    { subject: 'Office', en: "Which shortcut is used to bold text in MS Office?", ur: "MS Office میں ٹیکسٹ بولڈ کرنے کے لیے کونسا شارٹ کٹ استعمال ہوتا ہے؟", opts: { en: ["Ctrl+1", "Ctrl+Shift+B", "Ctrl+B"], ur: ["Ctrl+1", "Ctrl+Shift+B", "Ctrl+B"] }, correct: 2 }
-  ];
-
-  let currentLang = 'en';
-  let total = 0;
-  let isQuizSubmitted = false;
-  let userAnswers = {};
-  let currentFilter = 'all';
-  let currentQuestionIndex = 0;
-  const container = document.getElementById('questionsContainer');
-  const allQuestions = [];
-
-  // ===== PROGRESS BAR =====
-  function updateProgress() {
-    const totalQ = questions.length;
-    let answered = 0;
-    for (let i = 0; i < totalQ; i++) {
-      if (userAnswers[i] !== undefined) answered++;
+    function startQuiz() {
+      const name = document.getElementById('welcomeName').value.trim();
+      if (!name) {
+        alert('Please enter your name to start the quiz!');
+        document.getElementById('welcomeName').focus();
+        return;
+      }
+      
+      const roll = document.getElementById('welcomeRoll').value.trim() || 'N/A';
+      const course = document.getElementById('welcomeCourse').value;
+      const courseText = document.getElementById('welcomeCourse').options[document.getElementById('welcomeCourse').selectedIndex].text;
+      
+      document.getElementById('name').value = name;
+      document.getElementById('roll').value = roll;
+      document.getElementById('course').value = course;
+      
+      document.getElementById('displayName').textContent = name;
+      document.getElementById('displayRoll').textContent = roll;
+      document.getElementById('displayCourse').textContent = courseText;
+      
+      document.getElementById('welcomeScreen').classList.add('hidden');
+      document.getElementById('quizCard').classList.add('visible');
+      
+      renderQuestions(currentLang);
     }
-    const percentage = (answered / totalQ) * 100;
-    document.getElementById('progressFill').style.width = percentage + '%';
-    document.getElementById('progressText').textContent = `${answered} / ${totalQ} answered`;
-  }
 
-  // ===== FILTER QUESTIONS =====
-  function filterQuestions(subject, btn) {
-    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = subject;
-    
-    let visibleQuestions = [];
-    document.querySelectorAll('.question').forEach((q, idx) => {
-      if (subject === 'all') {
-        q.classList.remove('hidden');
-        visibleQuestions.push(idx);
-      } else {
-        if (q.dataset.subject === subject) {
+    function updateProgress() {
+      const totalQ = questions.length;
+      let answered = 0;
+      for (let i = 0; i < totalQ; i++) {
+        if (userAnswers[i] !== undefined) answered++;
+      }
+      const percentage = (answered / totalQ) * 100;
+      document.getElementById('progressFill').style.width = percentage + '%';
+      document.getElementById('progressText').textContent = `${answered} / ${totalQ} answered`;
+    }
+
+    function filterQuestions(subject, btn) {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = subject;
+      
+      let visibleQuestions = [];
+      document.querySelectorAll('.question').forEach((q, idx) => {
+        if (subject === 'all') {
           q.classList.remove('hidden');
           visibleQuestions.push(idx);
         } else {
-          q.classList.add('hidden');
+          if (q.dataset.subject === subject) {
+            q.classList.remove('hidden');
+            visibleQuestions.push(idx);
+          } else {
+            q.classList.add('hidden');
+          }
         }
+      });
+      
+      const totalVisible = visibleQuestions.length;
+      const totalQ = questions.length;
+      document.getElementById('navInfo').textContent = 
+        subject === 'all' ? `Showing: All Questions (${totalQ})` : 
+        `Showing: ${subject} (${totalVisible})`;
+      
+      if (visibleQuestions.length > 0) {
+        currentQuestionIndex = visibleQuestions[0];
+        scrollToQuestion(currentQuestionIndex);
       }
-    });
-    
-    // Update navigation info
-    const totalVisible = visibleQuestions.length;
-    const totalQ = questions.length;
-    document.getElementById('navInfo').textContent = 
-      subject === 'all' ? `Showing: All Questions (${totalQ})` : 
-      `Showing: ${subject} (${totalVisible})`;
-    
-    // Reset to first visible question
-    if (visibleQuestions.length > 0) {
-      currentQuestionIndex = visibleQuestions[0];
-      scrollToQuestion(currentQuestionIndex);
+      updateNavButtons();
     }
-    updateNavButtons();
-  }
 
-  // ===== NAVIGATION =====
-  function getVisibleQuestions() {
-    const visible = [];
-    document.querySelectorAll('.question').forEach((q, idx) => {
-      if (!q.classList.contains('hidden')) {
-        visible.push(idx);
-      }
-    });
-    return visible;
-  }
-
-  function navigateQuestions(direction) {
-    const visible = getVisibleQuestions();
-    if (visible.length === 0) return;
-    
-    const currentIdx = visible.indexOf(currentQuestionIndex);
-    let newIdx;
-    if (direction === 'next') {
-      newIdx = (currentIdx + 1) % visible.length;
-    } else {
-      newIdx = (currentIdx - 1 + visible.length) % visible.length;
-    }
-    currentQuestionIndex = visible[newIdx];
-    scrollToQuestion(currentQuestionIndex);
-    updateNavButtons();
-  }
-
-  function scrollToQuestion(index) {
-    const questions = document.querySelectorAll('.question');
-    if (questions[index]) {
-      questions[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Highlight effect
-      questions[index].style.transition = '0.3s';
-      questions[index].style.boxShadow = '0 0 0 3px #f7971e, 0 4px 20px rgba(0,0,0,0.1)';
-      setTimeout(() => {
-        questions[index].style.boxShadow = '';
-      }, 1500);
-    }
-  }
-
-  function updateNavButtons() {
-    const visible = getVisibleQuestions();
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    
-    if (visible.length <= 1) {
-      prevBtn.disabled = true;
-      nextBtn.disabled = true;
-      return;
-    }
-    
-    prevBtn.disabled = false;
-    nextBtn.disabled = false;
-  }
-
-  // ===== RENDER QUESTIONS =====
-  function renderQuestions(lang) {
-    let html = '';
-    questions.forEach((q, idx) => {
-      const qNum = idx + 1;
-      const qText = lang === 'en' ? q.en : q.ur;
-      const opts = lang === 'en' ? q.opts.en : q.opts.ur;
-      const name = `q${idx}`;
-      const badgeClass = getBadge(q.subject);
-      const subjectLabel = getSubjectLabel(q.subject);
-      html += `
-        <div class="question" data-subject="${q.subject}" data-index="${idx}">
-          <h3>
-            ${qNum}) ${qText}
-            <span class="badge ${badgeClass}">${subjectLabel}</span>
-          </h3>
-          <div class="options">
-            <div class="option-item">
-              <input type="radio" name="${name}" value="0" id="${name}_0" onchange="onAnswerChange(${idx})">
-              <label for="${name}_0">A. ${opts[0]}</label>
-            </div>
-            <div class="option-item">
-              <input type="radio" name="${name}" value="1" id="${name}_1" onchange="onAnswerChange(${idx})">
-              <label for="${name}_1">B. ${opts[1]}</label>
-            </div>
-            <div class="option-item">
-              <input type="radio" name="${name}" value="2" id="${name}_2" onchange="onAnswerChange(${idx})">
-              <label for="${name}_2">C. ${opts[2]}</label>
-            </div>
-          </div>
-          <div class="feedback" id="r${idx}"></div>
-        </div>
-      `;
-    });
-    container.innerHTML = html;
-    
-    // Update language
-    document.querySelector('.quiz-title span').innerHTML = lang === 'en' ? '🏆 Noor Mustafa Mega Quiz' : '🏆 نور مصطفیٰ میگا کوئز';
-    document.getElementById('name').placeholder = lang === 'en' ? 'Student Name' : 'طالب علم کا نام';
-    document.getElementById('roll').placeholder = lang === 'en' ? 'Roll Number' : 'رول نمبر';
-    
-    // Reset result
-    document.getElementById('result').style.display = 'none';
-    document.querySelectorAll('.feedback').forEach(el => el.innerHTML = '');
-    
-    // Apply current filter
-    const activeTab = document.querySelector('.filter-tab.active');
-    if (activeTab) {
-      filterQuestions(currentFilter, activeTab);
-    }
-    
-    updateProgress();
-    updateNavButtons();
-  }
-
-  function onAnswerChange(idx) {
-    const name = `q${idx}`;
-    const selected = document.querySelector(`input[name="${name}"]:checked`);
-    if (selected) {
-      userAnswers[idx] = parseInt(selected.value);
-    } else {
-      delete userAnswers[idx];
-    }
-    updateProgress();
-  }
-
-  function getBadge(subject) {
-    const map = { 'HTML': 'badge-html', 'CSS': 'badge-css', 'C': 'badge-c', 'Office': 'badge-office' };
-    return map[subject] || 'badge-html';
-  }
-
-  function getSubjectLabel(subject) {
-    const map = { 'HTML': 'HTML', 'CSS': 'CSS', 'C': 'C Prog.', 'Office': 'MS Office' };
-    return map[subject] || subject;
-  }
-
-  function setLanguage(lang) {
-    currentLang = lang;
-    document.getElementById('langEn').classList.toggle('active', lang === 'en');
-    document.getElementById('langUr').classList.toggle('active', lang === 'ur');
-    renderQuestions(lang);
-  }
-
-  function toggleDark() {
-    document.body.classList.toggle('dark-mode');
-  }
-
-  // ===== QUIZ SUBMIT =====
-  function quiz() {
-    if (isQuizSubmitted) return;
-    isQuizSubmitted = true;
-    document.getElementById('submitBtn').disabled = true;
-    
-    total = 0;
-    const totalQ = questions.length;
-    let subjectScores = { HTML: 0, CSS: 0, C: 0, Office: 0 };
-    let subjectTotals = { HTML: 0, CSS: 0, C: 0, Office: 0 };
-    let reviewItems = [];
-
-    for (let i = 0; i < totalQ; i++) {
-      const name = `q${i}`;
-      const selected = document.querySelector(`input[name="${name}"]:checked`);
-      const feedback = document.getElementById(`r${i}`);
-      const correctAns = questions[i].correct;
-      const subject = questions[i].subject;
-      subjectTotals[subject]++;
-
-      if (selected) {
-        const val = parseInt(selected.value);
-        if (val === correctAns) {
-          total++;
-          subjectScores[subject]++;
-          feedback.innerHTML = currentLang === 'en' ? '✅ Correct' : '✅ درست';
-          feedback.style.color = '#0f6b3a';
-          reviewItems.push({ q: i, correct: true, selected: val, correctAns: correctAns, text: questions[i][currentLang] });
-        } else {
-          feedback.innerHTML = currentLang === 'en' ? '❌ Wrong' : '❌ غلط';
-          feedback.style.color = '#b13e3e';
-          reviewItems.push({ q: i, correct: false, selected: val, correctAns: correctAns, text: questions[i][currentLang] });
+    function getVisibleQuestions() {
+      const visible = [];
+      document.querySelectorAll('.question').forEach((q, idx) => {
+        if (!q.classList.contains('hidden')) {
+          visible.push(idx);
         }
+      });
+      return visible;
+    }
+
+    function navigateQuestions(direction) {
+      const visible = getVisibleQuestions();
+      if (visible.length === 0) return;
+      
+      const currentIdx = visible.indexOf(currentQuestionIndex);
+      let newIdx;
+      if (direction === 'next') {
+        newIdx = (currentIdx + 1) % visible.length;
       } else {
-        feedback.innerHTML = currentLang === 'en' ? '⚠️ Not answered' : '⚠️ کوئی جواب نہیں';
-        feedback.style.color = '#a06d2b';
-        reviewItems.push({ q: i, correct: false, selected: null, correctAns: correctAns, text: questions[i][currentLang] });
+        newIdx = (currentIdx - 1 + visible.length) % visible.length;
+      }
+      currentQuestionIndex = visible[newIdx];
+      scrollToQuestion(currentQuestionIndex);
+      updateNavButtons();
+    }
+
+    function scrollToQuestion(index) {
+      const questions = document.querySelectorAll('.question');
+      if (questions[index]) {
+        questions[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        questions[index].style.transition = '0.3s';
+        questions[index].style.boxShadow = '0 0 0 3px #f7971e, 0 4px 20px rgba(0,0,0,0.1)';
+        setTimeout(() => {
+          questions[index].style.boxShadow = '';
+        }, 1500);
       }
     }
 
-    const percentage = (total / totalQ) * 100;
-    const scoreEl = document.getElementById('score');
-    const percentEl = document.getElementById('percent');
-    const resultPanel = document.getElementById('result');
-
-    const scoreText = currentLang === 'en' ? 'Score' : 'اسکور';
-    const percentText = currentLang === 'en' ? 'Percentage' : 'فیصد';
-    scoreEl.innerHTML = `${scoreText} : ${total}/${totalQ}`;
-    percentEl.innerHTML = `${percentText} : ${percentage.toFixed(0)}%`;
-
-    // Subject-wise result
-    let subjectHtml = '';
-    const subjectNames = { HTML: 'HTML', CSS: 'CSS', C: 'C Prog.', Office: 'MS Office' };
-    for (let sub in subjectScores) {
-      subjectHtml += `<div class="subject-result-item">
-        <span class="s-name">${subjectNames[sub]}:</span>
-        <span class="s-score">${subjectScores[sub]}/${subjectTotals[sub]}</span>
-      </div>`;
+    function updateNavButtons() {
+      const visible = getVisibleQuestions();
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      if (visible.length <= 1) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+      
+      prevBtn.disabled = false;
+      nextBtn.disabled = false;
     }
-    document.getElementById('subjectResult').innerHTML = subjectHtml;
 
-    // Review section
-    let reviewHtml = '';
-    reviewItems.forEach((item, idx) => {
-      const qNum = idx + 1;
-      const opts = questions[idx].opts[currentLang];
-      const isCorrect = item.correct;
-      const icon = isCorrect ? '✅' : '❌';
-      const cls = isCorrect ? 'correct' : 'wrong';
-      const selectedText = item.selected !== null ? opts[item.selected] : 'Not answered';
-      const correctText = opts[item.correctAns];
-      reviewHtml += `
-        <div class="review-item ${cls}">
-          <span>${icon}</span>
-          <span class="q-text">Q${qNum}: ${item.text}</span>
-          <span>→ Your: ${selectedText}</span>
-          ${!isCorrect ? `<span style="color:#0f6b3a;">✔ Correct: ${correctText}</span>` : ''}
-        </div>
-      `;
-    });
-    document.getElementById('reviewList').innerHTML = reviewHtml;
+    function renderQuestions(lang) {
+      let html = '';
+      questions.forEach((q, idx) => {
+        const qNum = idx + 1;
+        const qText = lang === 'en' ? q.en : q.ur;
+        const opts = lang === 'en' ? q.opts.en : q.opts.ur;
+        const name = `q${idx}`;
+        const badgeClass = getBadge(q.subject);
+        const subjectLabel = getSubjectLabel(q.subject);
+        html += `
+          <div class="question" data-subject="${q.subject}" data-index="${idx}">
+            <h3>
+              ${qNum}) ${qText}
+              <span class="badge ${badgeClass}">${subjectLabel}</span>
+            </h3>
+            <div class="options">
+              <div class="option-item">
+                <input type="radio" name="${name}" value="0" id="${name}_0" onchange="onAnswerChange(${idx})">
+                <label for="${name}_0">A. ${opts[0]}</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" name="${name}" value="1" id="${name}_1" onchange="onAnswerChange(${idx})">
+                <label for="${name}_1">B. ${opts[1]}</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" name="${name}" value="2" id="${name}_2" onchange="onAnswerChange(${idx})">
+                <label for="${name}_2">C. ${opts[2]}</label>
+              </div>
+            </div>
+            <div class="feedback" id="r${idx}"></div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+      
+      document.querySelector('.quiz-title span').innerHTML = lang === 'en' ? '🏆 Noor Mustafa Mega Quiz' : '🏆 نور مصطفیٰ میگا کوئز';
+      
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('certificate').style.display = 'none';
+      document.querySelectorAll('.feedback').forEach(el => el.innerHTML = '');
+      
+      const activeTab = document.querySelector('.filter-tab.active');
+      if (activeTab) {
+        filterQuestions(currentFilter, activeTab);
+      }
+      
+      updateProgress();
+      updateNavButtons();
+    }
 
-    resultPanel.style.display = 'block';
-    resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    send();
-  }
+    function onAnswerChange(idx) {
+      const name = `q${idx}`;
+      const selected = document.querySelector(`input[name="${name}"]:checked`);
+      if (selected) {
+        userAnswers[idx] = parseInt(selected.value);
+      } else {
+        delete userAnswers[idx];
+      }
+      updateProgress();
+    }
 
-  function send() {
-    const name = document.getElementById('name').value || 'Student';
-    const roll = document.getElementById('roll').value || 'N/A';
-    const courseSelect = document.getElementById('course');
-    const courseText = courseSelect.options[courseSelect.selectedIndex].text || courseSelect.value;
-    const totalQ = questions.length;
-    const percentage = ((total / totalQ) * 100).toFixed(0);
-    const msg = `WEBCODE INSTITUTE IT & ENGLISH LANGUAGE\n\nNOOR MUSTAFA MEGA QUIZ RESULT\n\nStudent : ${name}\nRoll No : ${roll}\nCourse : ${courseText}\nScore : ${total}/${totalQ}\nPercentage : ${percentage}%`;
-    document.getElementById('waLink').href = 'https://api.whatsapp.com/send?phone=923101391632&text=' + encodeURIComponent(msg);
-  }
+    function getBadge(subject) {
+      const map = { 'HTML': 'badge-html', 'CSS': 'badge-css', 'C': 'badge-c', 'Office': 'badge-office' };
+      return map[subject] || 'badge-html';
+    }
 
-  // Initial render
-  renderQuestions('en');
-</script>
+    function getSubjectLabel(subject) {
+      const map = { 'HTML': 'HTML', 'CSS': 'CSS', 'C': 'C Prog.', 'Office': 'MS Office' };
+      return map[subject] || subject;
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('langEn').classList.toggle('active', lang === 'en');
+      document.getElementById('langUr').classList.toggle('active', lang === 'ur');
+      renderQuestions(lang);
+    }
+
+    function toggleDark() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    function quiz() {
+      if (isQuizSubmitted) return;
+      isQuizSubmitted = true;
+      document.getElementById('submitBtn').disabled = true;
+      
+      total = 0;
+      const totalQ = questions.length;
+      let subjectScores = { HTML: 0, CSS: 0, C: 0, Office: 0 };
+      let subjectTotals = { HTML: 0, CSS: 0, C: 0, Office: 0 };
+      let reviewItems = [];
+      wrongNumbers = [];
+
+      for (let i = 0; i < totalQ; i++) {
+        const name = `q${i}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        const feedback = document.getElementById(`r${i}`);
+        const correctAns = questions[i].correct;
+        const subject = questions[i].subject;
+        subjectTotals[subject]++;
+
+        if (selected) {
+          const val = parseInt(selected.value);
+          if (val === correctAns) {
+            total++;
+            subjectScores[subject]++;
+            feedback.innerHTML = currentLang === 'en' ? '✅ Correct' : '✅ درست';
+            feedback.style.color = '#0f6b3a';
+            reviewItems.push({ q: i, correct: true, selected: val, correctAns: correctAns, text: questions[i][currentLang] });
+          } else {
+            feedback.innerHTML = currentLang === 'en' ? '❌ Wrong' : '❌ غلط';
+            feedback.style.color = '#b13e3e';
+            wrongNumbers.push(i+1);
+            reviewItems.push({ q: i, correct: false, selected: val, correctAns: correctAns, text: questions[i][currentLang] });
+          }
+        } else {
+          feedback.innerHTML = currentLang === 'en' ? '⚠️ Not answered' : '⚠️ کوئی جواب نہیں';
+          feedback.style.color = '#a06d2b';
+          wrongNumbers.push(i+1);
+          reviewItems.push({ q: i, correct: false, selected: null, correctAns: correctAns, text: questions[i][currentLang] });
+        }
+      }
+
+      const percentage = (total / totalQ) * 100;
+      const scoreEl = document.getElementById('score');
+      const percentEl = document.getElementById('percent');
+      const resultPanel = document.getElementById('result');
+
+      const scoreText = currentLang === 'en' ? 'Score' : 'اسکور';
+      const percentText = currentLang === 'en' ? 'Percentage' : 'فیصد';
+      scoreEl.innerHTML = `${scoreText} : ${total}/${totalQ}`;
+      percentEl.innerHTML = `${percentText} : ${percentage.toFixed(0)}%`;
+
+      let subjectHtml = '';
+      const subjectNames = { HTML: 'HTML', CSS: 'CSS', C: 'C Prog.', Office: 'MS Office' };
+      for (let sub in subjectScores) {
+        subjectHtml += `<div class="subject-result-item">
+          <span class="s-name">${subjectNames[sub]}:</span>
+          <span class="s-score">${subjectScores[sub]}/${subjectTotals[sub]}</span>
+        </div>`;
+      }
+      document.getElementById('subjectResult').innerHTML = subjectHtml;
+
+      let reviewHtml = '';
+      reviewItems.forEach((item, idx) => {
+        const qNum = idx + 1;
+        const opts = questions[idx].opts[currentLang];
+        const isCorrect = item.correct;
+        const icon = isCorrect ? '✅' : '❌';
+        const cls = isCorrect ? 'correct' : 'wrong';
+        const selectedText = item.selected !== null ? opts[item.selected] : 'Not answered';
+        const correctText = opts[item.correctAns];
+        reviewHtml += `
+          <div class="review-item ${cls}">
+            <span>${icon}</span>
+            <span class="q-text">Q${qNum}: ${item.text}</span>
+            <span>→ Your: ${selectedText}</span>
+            ${!isCorrect ? `<span style="color:#0f6b3a;">✔ Correct: ${correctText}</span>` : ''}
+          </div>
+        `;
+      });
+      document.getElementById('reviewList').innerHTML = reviewHtml;
+
+      if (wrongNumbers.length > 0) {
+        const wrongSummary = document.createElement('div');
+        wrongSummary.style.cssText = 'font-weight:600; margin-top:10px; padding:10px; background:rgba(255,200,200,0.3); border-radius:12px;';
+        wrongSummary.innerHTML = `❌ Questions answered wrong (or skipped): <strong>${wrongNumbers.join(', ')}</strong>`;
+        document.getElementById('reviewSection').appendChild(wrongSummary);
+      }
+
+      resultPanel.style.display = 'block';
+      resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      const cert = document.getElementById('certificate');
+      if (percentage >= 80) {
+        const name = document.getElementById('name').value || 'Student';
+        document.getElementById('certName').textContent = name;
+        document.getElementById('certScore').textContent = `${total}/${totalQ}`;
+        document.getElementById('certPercent').textContent = `${percentage.toFixed(0)}%`;
+        cert.style.display = 'block';
+        cert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        cert.style.display = 'none';
+      }
+
+      send();
+    }
+
+    function send() {
+      const name = document.getElementById('name').value || 'Student';
+      const roll = document.getElementById('roll').value || 'N/A';
+      const courseSelect = document.getElementById('course');
+      const courseText = courseSelect.options[courseSelect.selectedIndex].text || courseSelect.value;
+      const totalQ = questions.length;
+      const percentage = ((total / totalQ) * 100).toFixed(0);
+      
+      let msg = `🏆 NOOR MUSTAFA MEGA QUIZ RESULT\n\n`;
+      msg += `👤 Student : ${name}\n`;
+      msg += `🎓 Roll No : ${roll}\n`;
+      msg += `📚 Course : ${courseText}\n`;
+      msg += `📝 Score : ${total}/${totalQ}\n`;
+      msg += `📊 Percentage : ${percentage}%\n\n`;
+      
+      if (wrongNumbers.length > 0) {
+        msg += `❌ Wrong Questions: ${wrongNumbers.join(', ')}\n`;
+      } else {
+        msg += `✅ All Questions Correct! Excellent! 🎉\n`;
+      }
+      
+      msg += `\nCreated by Noor Mustafa Jatoi PJG`;
+      
+      document.getElementById('waLink').href = 'https://api.whatsapp.com/send?phone=923101391632&text=' + encodeURIComponent(msg);
+    }
+
+    function downloadCertificatePDF() {
+      const certElement = document.getElementById('certificate');
+      if (certElement.style.display === 'none') {
+        alert('Certificate is only available for scores 80% and above!');
+        return;
+      }
+      
+      const opt = {
+        margin:        [0.5, 0.5, 0.5, 0.5],
+        filename:     `Certificate_${document.getElementById('name').value || 'Student'}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, letterRendering: true },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+      
+      const btn = document.querySelector('.download-pdf-btn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ Generating...';
+      btn.disabled = true;
+      
+      html2pdf().set(opt).from(certElement).save().then(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }).catch(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert('Error generating PDF. Please try again.');
+      });
+    }
+  </script>
 </body>
 </html>
